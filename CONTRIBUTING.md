@@ -1,210 +1,96 @@
 # Contribuindo com o projeto
 
-Este projeto é utilizado na disciplina de Gestão da Qualidade de Software.
+Regras para mexer neste repositÃ³rio sem quebrar o que jÃ¡ funciona. SÃ£o poucas
+coisas, mas todas verificÃ¡veis antes do commit.
 
-As alterações devem ser realizadas de forma incremental e verificável, preservando o funcionamento do sistema durante sua evolução.
+## Antes de comeÃ§ar
 
-## Preparação do ambiente
-
-Após clonar o repositório:
-
-```bash
-git clone URL_DO_REPOSITORIO_DE_B
-cd gqs-cadatro-pessoas
-```
-
-Instale as ferramentas utilizadas no projeto:
-
-```bash
-pip install pylint radon pre-commit
-```
-
-Ative o hook do pre-commit:
-
-```bash
-pre-commit install
-```
-
-O comando `pre-commit install` deve ser executado em cada novo clone do repositório, pois o hook é instalado localmente no diretório `.git`.
-
-O arquivo `.pre-commit-config.yaml` faz parte do projeto e é versionado pelo Git. Portanto, ele é obtido normalmente ao realizar o clone.
-
-## Antes de iniciar uma alteração
-
-Atualize a branch principal:
-
-```bash
+```powershell
 git switch main
 git pull
-```
-
-Verifique o estado do repositório:
-
-```bash
 git status
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python -m pre_commit install
 ```
 
-A árvore de trabalho deve estar limpa antes de iniciar uma nova alteração.
+Crie uma branch com nome curto e identificÃ¡vel. Exemplos que jÃ¡ existem no
+histÃ³rico: `aula9/testes-automatizados`, `feature/consolidacao-final`.
 
-## Trabalhando com branches
+## PadrÃµes de cÃ³digo
 
-Alterações relevantes devem ser realizadas em uma branch própria.
+| Item | ConvenÃ§Ã£o adotada |
+| --- | --- |
+| Python | 3.15 no laboratÃ³rio (Pylint configurado para 3.15) |
+| Classes | `PascalCase` |
+| FunÃ§Ãµes, mÃ©todos, variÃ¡veis e mÃ³dulos | `snake_case` (`get_nome`, `buscar_por_nome`) |
+| Constantes | `MAIUSCULAS_COM_UNDERLINE` |
+| Docstring | em mÃ³dulo, classe, funÃ§Ã£o e mÃ©todo |
+| IndentaÃ§Ã£o | 4 espaÃ§os |
+| Linha | atÃ© 100 colunas |
+| EspaÃ§o no fim da linha | nÃ£o |
+| Lista vazia | `if not lista:` |
+| Atributo interno | prefixo `__` |
+| PersistÃªncia | sempre atrÃ¡s de `RepositorioPessoas` |
 
-Exemplo:
+NÃ£o desabilito regra do Pylint para "limpar" relatÃ³rio. Se um apontamento fizer
+sentido, corrijo o cÃ³digo; se nÃ£o fizer, registro o motivo no commit. O
+`.pylintrc` atual sÃ³ desabilita mensagens internas do prÃ³prio Pylint.
 
-```bash
-git switch -c refactor/orientacao-objetos
-```
+## Antes de cada commit
 
-A branch permite desenvolver e verificar uma alteração sem modificar diretamente a versão estável disponível em `main`.
+Os hooks locais rodam sozinhos no `git commit` e verificam:
 
-## Durante o desenvolvimento
+1. `pylint src` â€” anÃ¡lise estÃ¡tica;
+2. `pytest -q` â€” testes;
+3. `radon cc src -a -s` â€” complexidade, sÃ³ para mostrar o resultado.
 
-Faça alterações pequenas e relacionadas a um único objetivo.
+Se quiser rodar na mÃ£o:
 
-Após cada etapa:
-
-1. execute o programa;
-2. verifique se o comportamento esperado foi preservado;
-3. confira os arquivos modificados;
-4. registre a alteração em um commit.
-
-Para executar o programa:
-
-```bash
-python src/main.py
-```
-
-Para verificar as alterações:
-
-```bash
-git status
-git diff
-```
-
-## Análise estática
-
-O projeto utiliza Pylint para análise estática.
-
-A análise pode ser executada manualmente com:
-
-```bash
+```powershell
+python -m pylint src
 python -m pytest -v
-pylint src
+python -m radon cc src -a -s
+python -m pre_commit run --all-files
 ```
 
-O projeto também utiliza `pre-commit`. O hook configurado é executado automaticamente durante a realização dos commits.
+Para cÃ³digo novo, mantenha os blocos com nota A no RADON. Se aparecer B ou C,
+quebre a funÃ§Ã£o em partes menores â€” foi exatamente o que fiz com `executar()`,
+que passou de B(8) para A(2).
 
-Se a verificação falhar, o commit não será realizado. Os problemas apontados devem ser analisados e corrigidos antes de uma nova tentativa.
+## Mensagens de commit
 
-Também é possível executar manualmente todos os hooks configurados:
-
-```bash
-pre-commit run --all-files
-```
-
-## Métricas
-
-A complexidade ciclomática pode ser analisada com Radon:
-
-```bash
-radon cc src -s
-```
-
-Os resultados devem ser interpretados considerando a responsabilidade e o contexto de cada função ou método.
-
-## Commits
-
-Antes de realizar um commit, verifique as alterações:
-
-```bash
-git status
-git diff
-```
-
-Adicione somente os arquivos relacionados à alteração:
-
-```bash
-git add <arquivos>
-```
-
-Os commits devem representar alterações pequenas e verificáveis, com mensagens que indiquem claramente o objetivo da mudança.
-
-Exemplos:
+Use `feat`, `refactor`, `chore`, `fix`, `docs` ou `test`, seguidos de uma frase
+curta no imperativo e sem ponto final. Exemplos reais do histÃ³rico:
 
 ```text
-refactor: reorganiza estrutura do projeto
-refactor: cria classe Pessoa
-refactor: encapsula operacoes em CadastroPessoas
-refactor: separa interface da aplicacao
-docs: atualiza orientacoes de contribuicao
-style: corrige apontamentos do pylint
+refactor: reduz complexidade do menu principal
+test: amplia cobertura com pytest e dao mysql
+chore: configura Docker Compose e dependencias de qualidade
+docs: registra metricas radon e checklist pylint
 ```
 
-Depois do commit, o histórico pode ser consultado com:
+Nada de `update`, `final`, `arrumado` ou data alterada de propÃ³sito. Se o
+commit corrigir um defeito, escreva `fix:` e diga qual foi o defeito.
 
-```bash
-git log --oneline
-```
+## ColaboraÃ§Ã£o com outro estudante
 
-Para inspecionar as alterações registradas em um commit específico:
+O fluxo usado na disciplina foi fork â†’ branch â†’ commit â†’ push â†’ Pull Request â†’
+revisÃ£o â†’ merge:
 
-```bash
-git show <hash>
-```
+1. quem contribui clona/forka o repositÃ³rio do colega e cria uma branch;
+2. roda testes e Pylint antes de abrir o PR;
+3. descreve no PR o que mudou e quais comandos usou para verificar;
+4. o dono do repositÃ³rio revisa e sÃ³ integra quando estiver coerente.
 
-## Arquivos que não devem ser versionados
+Foi assim que entraram o repositÃ³rio em memÃ³ria (PR #2) e a persistÃªncia MySQL
+(PR #1 no repo do So1d e PR #3 neste repo). PR aberto sem revisÃ£o nÃ£o conta como
+integrado.
 
-Arquivos temporários ou gerados automaticamente pelas ferramentas não devem ser adicionados ao repositório.
+## Banco de dados
 
-O arquivo `.gitignore` define arquivos e diretórios que devem ser ignorados pelo Git.
-
-Exemplos:
-
-```text
-__pycache__/
-*.pyc
-```
-
-## Antes de integrar uma alteração
-
-Antes de realizar o merge, execute o programa e as verificações previstas:
-
-```bash
-python src/main.py
-pylint src
-radon cc src -s
-git status
-```
-
-Confirme que:
-
-- o comportamento esperado foi preservado;
-- não existem problemas de análise estática que precisem ser corrigidos;
-- as métricas foram verificadas quando pertinentes;
-- não existem alterações pendentes no repositório.
-
-Somente depois dessas verificações a alteração deve ser integrada à branch principal.
-
-## Publicar a branch e abrir o Pull Request
-
-    git add <arquivos>
-    git diff --cached --name-only
-    git commit -m "tipo: descricao"
-    git push -u origin feature/nome-da-mudanca
-
-No GitHub, abra o Pull Request com:
-
-- base: `main` do repositório de destino;
-- compare: a branch recém-publicada.
-
-Descreva o que mudou, quais arquivos foram alterados e quais
-verificações foram executadas.
-
-## Revisar e integrar à branch principal
-
-O revisor confere `Conversation`, `Commits`, `Files changed` e `Checks`.
-Se aprovado, faz o merge e guarda o link do PR como evidência.
-
-Não use `--no-verify`. Se Pylint ou PyTest falhar, corrija, faça
-`git add` novamente e repita o commit.
+Nunca commite senha real nem `.env`. O DAO lÃª `DB_HOST`, `DB_PORT`, `DB_USER`,
+`DB_PASSWORD` e `DB_NAME` do ambiente. Os testes usam um conector falso e nÃ£o
+precisam de MySQL rodando. Se vocÃª subir o compose, use `docker compose stop`
+para parar; `down --volumes` apaga os dados.
