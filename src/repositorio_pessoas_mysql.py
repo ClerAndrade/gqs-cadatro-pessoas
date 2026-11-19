@@ -1,4 +1,4 @@
-"""Persistência de pessoas em MySQL."""
+"""Persistencia de pessoas em MySQL."""
 
 import os
 from typing import List, Optional
@@ -13,33 +13,33 @@ from repositorio_pessoas import RepositorioPessoas
 class RepositorioPessoasMySQL(RepositorioPessoas):
     """Persiste pessoas na tabela pessoa do MySQL principal."""
 
-    def __init__(self, host, port, usuario, senha, banco):  # pylint: disable=too-many-arguments
-        self._config = {
-            "host": host,
-            "port": port,
-            "user": usuario,
-            "password": senha,
-            "database": banco,
-            "client_flags": [ClientFlag.FOUND_ROWS],
-        }
+    def __init__(self, config):
+        """Recebe a configuracao de conexao ja montada."""
+        self._config = dict(config)
+        self._config["client_flags"] = [ClientFlag.FOUND_ROWS]
 
     @classmethod
     def a_partir_do_ambiente(cls):
-        """Lê a configuração das variáveis de ambiente."""
-        return cls(
-            host=os.environ.get("DB_HOST", "localhost"),
-            port=int(os.environ["DB_PORT"]),
-            usuario=os.environ["DB_USER"],
-            senha=os.environ["DB_PASSWORD"],
-            banco=os.environ.get("DB_NAME", "cadastro"),
-        )
+        """Le host, porta, usuario, senha e banco das variaveis de ambiente."""
+        senha = os.environ.get("DB_PASSWORD")
+        if not senha:
+            raise ValueError("Defina DB_PASSWORD antes de usar o MySQL")
+
+        config = {
+            "host": os.environ.get("DB_HOST", "localhost"),
+            "port": int(os.environ.get("DB_PORT", "3307")),
+            "user": os.environ.get("DB_USER", "root"),
+            "password": senha,
+            "database": os.environ.get("DB_NAME", "cadastro"),
+        }
+        return cls(config)
 
     def _conectar(self):
-        """Abre uma nova conexão com o MySQL principal."""
+        """Abre uma nova conexao com o MySQL principal."""
         return mysql.connector.connect(**self._config)
 
     def _executar(self, sql, valores):
-        """Executa INSERT/UPDATE em transação; devolve linhas afetadas."""
+        """Executa INSERT/UPDATE em transacao e devolve linhas afetadas."""
         conexao = self._conectar()
         try:
             cursor = conexao.cursor()
@@ -69,30 +69,42 @@ class RepositorioPessoasMySQL(RepositorioPessoas):
             conexao.close()
 
     def cadastrar(self, pessoa: Pessoa) -> None:
-        sql = ("INSERT INTO pessoa (nome, idade, email) "
-               "VALUES (%s, %s, %s)")
-        valores = (pessoa.getNome(), pessoa.getIdade(), pessoa.getEmail())
+        """Insere uma pessoa na tabela pessoa."""
+        sql = "INSERT INTO pessoa (nome, idade, email) VALUES (%s, %s, %s)"
+        valores = (pessoa.get_nome(), pessoa.get_idade(), pessoa.get_email())
         self._executar(sql, valores)
 
     def buscar(self, nome: str) -> Optional[Pessoa]:
-        sql = ("SELECT nome, idade, email FROM pessoa "
-               "WHERE nome = %s ORDER BY id LIMIT 1")
+        """Busca a primeira pessoa com o nome informado."""
+        sql = (
+            "SELECT nome, idade, email FROM pessoa "
+            "WHERE nome = %s ORDER BY id LIMIT 1"
+        )
         linhas = self._consultar(sql, (nome,))
         return self._para_pessoa(linhas[0]) if linhas else None
 
     def listar(self) -> List[Pessoa]:
+        """Lista todas as pessoas do banco em ordem de id."""
         sql = "SELECT nome, idade, email FROM pessoa ORDER BY id"
         linhas = self._consultar(sql)
         return [self._para_pessoa(linha) for linha in linhas]
 
     @staticmethod
     def _para_pessoa(linha) -> Pessoa:
+        """Converte uma linha do banco em objeto Pessoa."""
         nome, idade, email = linha
         return Pessoa(nome, idade, email)
 
     def alterar(self, nome: str, nova_pessoa: Pessoa) -> bool:
-        sql = ("UPDATE pessoa SET nome = %s, idade = %s, email = %s "
-               "WHERE nome = %s")
-        valores = (nova_pessoa.getNome(), nova_pessoa.getIdade(),
-                   nova_pessoa.getEmail(), nome)
+        """Atualiza a pessoa encontrada pelo nome."""
+        sql = (
+            "UPDATE pessoa SET nome = %s, idade = %s, email = %s "
+            "WHERE nome = %s"
+        )
+        valores = (
+            nova_pessoa.get_nome(),
+            nova_pessoa.get_idade(),
+            nova_pessoa.get_email(),
+            nome,
+        )
         return self._executar(sql, valores) > 0

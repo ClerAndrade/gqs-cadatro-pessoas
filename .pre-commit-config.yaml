@@ -1,9 +1,23 @@
-# .pre-commit-config.yaml
+# Verificacoes locais executadas antes de cada commit.
+# Os comandos usam o Python da .venv para nao depender do Python do sistema.
 repos:
   - repo: local
     hooks:
       - id: pylint
-        name: pylint
-        entry: python -m pylint
+        name: pylint (src)
+        entry: .venv/Scripts/python.exe -m pylint src
         language: system
-        types: [python]
+        files: ^src/
+        pass_filenames: false
+      - id: pytest
+        name: pytest
+        entry: .venv/Scripts/python.exe -m pytest -q
+        language: system
+        pass_filenames: false
+        always_run: true
+      - id: radon
+        name: radon cc (somente leitura)
+        entry: .venv/Scripts/python.exe -m radon cc src -a -s
+        language: system
+        pass_filenames: false
+        always_run: true

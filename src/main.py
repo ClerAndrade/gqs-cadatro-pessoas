@@ -4,10 +4,11 @@ from cadastro import CadastroPessoas
 from repositorio_pessoas_memoria import RepositorioPessoasMemoria
 from repositorio_pessoas_mysql import RepositorioPessoasMySQL
 
-USAR_MYSQL = True
+USAR_MYSQL = False
 
 
 def criar_repositorio():
+    """Escolhe o repositorio conforme a constante USAR_MYSQL."""
     if USAR_MYSQL:
         return RepositorioPessoasMySQL.a_partir_do_ambiente()
     return RepositorioPessoasMemoria()
@@ -43,11 +44,11 @@ def cadastrar_pessoa(cadastro):
 
 def exibir_pessoa(pessoa):
     """Exibe os dados de uma pessoa."""
-    print("Nome: " + pessoa.getNome())
-    print("Idade: " + str(pessoa.getIdade()))
-    print("E-mail: " + pessoa.getEmail())
+    print("Nome: " + pessoa.get_nome())
+    print("Idade: " + str(pessoa.get_idade()))
+    print("E-mail: " + pessoa.get_email())
 
-    if pessoa.getIdade() >= 18:
+    if pessoa.get_idade() >= 18:
         print("Situacao: Maior de idade")
     else:
         print("Situacao: Menor de idade")
@@ -56,7 +57,7 @@ def exibir_pessoa(pessoa):
 def consultar_pessoa(cadastro):
     """Consulta uma pessoa pelo nome."""
     procurado = input("Nome para consultar: ")
-    pessoa = cadastro.buscarPorNome(procurado)
+    pessoa = cadastro.buscar_por_nome(procurado)
 
     if pessoa is None:
         print("Nao encontrado")
@@ -67,7 +68,7 @@ def consultar_pessoa(cadastro):
 def alterar_pessoa(cadastro):
     """Altera os dados de uma pessoa."""
     procurado = input("Nome para alterar: ")
-    pessoa = cadastro.buscarPorNome(procurado)
+    pessoa = cadastro.buscar_por_nome(procurado)
 
     if pessoa is None:
         print("Nao encontrado")
@@ -95,7 +96,7 @@ def listar_pessoas(cadastro):
     """Lista todas as pessoas cadastradas."""
     pessoas = cadastro.listar()
 
-    if len(pessoas) == 0:
+    if not pessoas:
         print("Nenhuma pessoa cadastrada")
 
     for pessoa in pessoas:
@@ -142,16 +143,16 @@ def analisar_email(email):
 def analisar_pessoa(cadastro):
     """Analisa os dados de uma pessoa."""
     procurado = input("Nome para analisar: ")
-    pessoa = cadastro.buscarPorNome(procurado)
+    pessoa = cadastro.buscar_por_nome(procurado)
 
     if pessoa is None:
         print("Pessoa nao encontrada")
     else:
-        analisar_faixa_etaria(pessoa.getIdade())
-        analisar_email(pessoa.getEmail())
+        analisar_faixa_etaria(pessoa.get_idade())
+        analisar_email(pessoa.get_email())
         analisar_contato(
-            pessoa.getIdade(),
-            pessoa.getEmail()
+            pessoa.get_idade(),
+            pessoa.get_email()
         )
 
 
