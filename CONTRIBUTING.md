@@ -9,8 +9,8 @@ As alterações devem ser realizadas de forma incremental e verificável, preser
 Após clonar o repositório:
 
 ```bash
-git clone https://github.com/julianolamb/gqs-cadastro-pessoas.git
-cd gqs-cadastro-pessoas
+git clone URL_DO_REPOSITORIO_DE_B
+cd gqs-cadatro-pessoas
 ```
 
 Instale as ferramentas utilizadas no projeto:
@@ -89,6 +89,7 @@ O projeto utiliza Pylint para análise estática.
 A análise pode ser executada manualmente com:
 
 ```bash
+python -m pytest -v
 pylint src
 ```
 
@@ -184,3 +185,26 @@ Confirme que:
 - não existem alterações pendentes no repositório.
 
 Somente depois dessas verificações a alteração deve ser integrada à branch principal.
+
+## Publicar a branch e abrir o Pull Request
+
+    git add <arquivos>
+    git diff --cached --name-only
+    git commit -m "tipo: descricao"
+    git push -u origin feature/nome-da-mudanca
+
+No GitHub, abra o Pull Request com:
+
+- base: `main` do repositório de destino;
+- compare: a branch recém-publicada.
+
+Descreva o que mudou, quais arquivos foram alterados e quais
+verificações foram executadas.
+
+## Revisar e integrar à branch principal
+
+O revisor confere `Conversation`, `Commits`, `Files changed` e `Checks`.
+Se aprovado, faz o merge e guarda o link do PR como evidência.
+
+Não use `--no-verify`. Se Pylint ou PyTest falhar, corrija, faça
+`git add` novamente e repita o commit.
