@@ -1,8 +1,8 @@
-# Checklist de anÃ¡lise estÃ¡tica â€” Pylint
+# Checklist de análise estática — Pylint
 
 Projeto: Cadastro de Pessoas. Ferramenta: Pylint 4.1.3, Python 3.15.
 
-## ExecuÃ§Ã£o antes das correÃ§Ãµes
+## Execução antes das correções
 
 Comando:
 
@@ -10,7 +10,7 @@ Comando:
 python -m pylint src
 ```
 
-SaÃ­da no commit `e289160` (antes da padronizaÃ§Ã£o):
+Saída no commit `e289160` (antes da padronização):
 
 ```text
 ************* Module repositorio_pessoas
@@ -25,25 +25,25 @@ Your code has been rated at 9.83/10
 
 ## O que foi corrigido
 
-| Apontamento | CorreÃ§Ã£o |
+| Apontamento | Correção |
 | --- | --- |
-| C0114 nos mÃ³dulos de repositÃ³rio | docstring de mÃ³dulo adicionada |
-| C0115 nas classes abstratas e de memÃ³ria | docstring de classe adicionada |
+| C0114 nos módulos de repositório | docstring de módulo adicionada |
+| C0115 nas classes abstratas e de memória | docstring de classe adicionada |
 | Nomes `getNome` / `buscarPorNome` | renomeados para `get_nome` / `buscar_por_nome` |
-| Regras desabilitadas no `.pylintrc` | configuraÃ§Ã£o reescrita; sÃ³ mensagens internas continuam desabilitadas |
+| Regras desabilitadas no `.pylintrc` | configuração reescrita; só mensagens internas continuam desabilitadas |
 
-Alguns apontamentos nÃ£o apareciam na nota porque a configuraÃ§Ã£o antiga
+Alguns apontamentos não apareciam na nota porque a configuração antiga
 desabilitava `invalid-name`, `trailing-whitespace`,
 `missing-function-docstring` e `missing-class-docstring`. Isso escondia
-problema real: havia mÃ©todo em `camelCase` e arquivo sem docstring. Preferi
-tirar essas exceÃ§Ãµes e corrigir o cÃ³digo.
+problema real: havia método em `camelCase` e arquivo sem docstring. Preferi
+tirar essas exceções e corrigir o código.
 
-## ExecuÃ§Ã£o depois
+## Execução depois
 
 ```text
 --------------------------------------------------------------------
 Your code has been rated at 10.00/10 (previous run: 9.83/10, +0.17)
 ```
 
-O `fail-under` estÃ¡ em 10, entÃ£o qualquer regressÃ£o faz o hook falhar e o
-commit nÃ£o entra.
+O `fail-under` está em 10, então qualquer regressão faz o hook falhar e o
+commit não entra.

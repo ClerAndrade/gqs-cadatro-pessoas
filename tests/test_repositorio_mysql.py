@@ -121,7 +121,7 @@ def test_alterar_retorna_true(conexao):
 
 
 def test_a_partir_do_ambiente(monkeypatch):
-    """As variaveis de ambiente montam a configuraÃ§Ã£o."""
+    """As variaveis de ambiente montam a configuração."""
     monkeypatch.setenv("DB_HOST", "127.0.0.1")
     monkeypatch.setenv("DB_PORT", "3307")
     monkeypatch.setenv("DB_USER", "root")

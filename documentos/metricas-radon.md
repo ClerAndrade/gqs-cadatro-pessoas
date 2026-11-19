@@ -1,6 +1,6 @@
-# MÃ©tricas de complexidade â€” RADON
+# Métricas de complexidade — RADON
 
-Comandos usados, sempre da raiz do repositÃ³rio:
+Comandos usados, sempre da raiz do repositório:
 
 ```powershell
 python -m radon cc src -a -s
@@ -8,8 +8,8 @@ python -m radon raw src
 python -m radon mi src
 ```
 
-`cc` mede complexidade ciclomÃ¡tica, `raw` conta linhas e comentÃ¡rios, e `mi`
-calcula o Ã­ndice de manutenibilidade.
+`cc` mede complexidade ciclomática, `raw` conta linhas e comentários, e `mi`
+calcula o índice de manutenibilidade.
 
 ## Antes (commit `e289160`)
 
@@ -22,14 +22,14 @@ src\main.py
 Average complexity: A (1.8541666666666667)
 ```
 
-O bloco mais problemÃ¡tico era `executar()`: o `while` com o `if/elif` de todas
-as opÃ§Ãµes do menu dava complexidade B(8). NÃ£o estava errado, mas era o ponto
-mais difÃ­cil de testar e de alterar.
+O bloco mais problemático era `executar()`: o `while` com o `if/elif` de todas
+as opções do menu dava complexidade B(8). Não estava errado, mas era o ponto
+mais difícil de testar e de alterar.
 
 ## Depois (commit `2441169`)
 
-Separei o despacho das opÃ§Ãµes em `processar_opcao()`, com um dicionÃ¡rio de
-aÃ§Ãµes, e `executar()` ficou sÃ³ com o laÃ§o do menu:
+Separei o despacho das opções em `processar_opcao()`, com um dicionário de
+ações, e `executar()` ficou só com o laço do menu:
 
 ```text
 src\main.py
@@ -46,11 +46,11 @@ Average complexity: A (1.7959183673469388)
 | Indicador | Antes | Depois |
 | --- | --- | --- |
 | Blocos analisados | 48 | 49 |
-| MÃ©dia de complexidade | A (1,85) | A (1,80) |
-| Pior bloco | `executar` â€” B (8) | trÃªs funÃ§Ãµes â€” A (4) |
+| Média de complexidade | A (1,85) | A (1,80) |
+| Pior bloco | `executar` — B (8) | três funções — A (4) |
 | Blocos com nota B ou C | 1 | 0 |
 
-O `radon mi src` deu **A para os seis mÃ³dulos** de `src`. NÃ£o persegui nota
-perfeita: o objetivo foi eliminar o Ãºnico bloco B e deixar o menu fÃ¡cil de
-ler. O hook do pre-commit roda o `radon cc` em cada commit para a mÃ©trica
-continuar visÃ­vel.
+O `radon mi src` deu **A para os seis módulos** de `src`. Não persegui nota
+perfeita: o objetivo foi eliminar o único bloco B e deixar o menu fácil de
+ler. O hook do pre-commit roda o `radon cc` em cada commit para a métrica
+continuar visível.

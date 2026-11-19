@@ -1,4 +1,4 @@
-"""Programa para cadastro de pessoas. Uso didÃ¡tico na disciplina de GQS."""
+"""Programa para cadastro de pessoas. Uso didático na disciplina de GQS."""
 
 import os
 
@@ -8,12 +8,12 @@ from repositorio_pessoas_mysql import RepositorioPessoasMySQL
 
 
 def criar_repositorio():
-    """Escolhe o repositÃ³rio pela variÃ¡vel CADASTRO_REPOSITORIO."""
+    """Escolhe o repositório pela variável CADASTRO_REPOSITORIO."""
     tipo = os.environ.get("CADASTRO_REPOSITORIO", "memoria").strip().lower()
     if tipo == "mysql":
         return RepositorioPessoasMySQL.a_partir_do_ambiente()
     if tipo != "memoria":
-        print(f"RepositÃ³rio {tipo!r} desconhecido; usando memoria.")
+        print(f"Repositório {tipo!r} desconhecido; usando memoria.")
     return RepositorioPessoasMemoria()
 
 
@@ -157,7 +157,7 @@ def analisar_pessoa(cadastro):
 
 
 def processar_opcao(cadastro, op):
-    """Executa a aÃ§Ã£o da opÃ§Ã£o escolhida e informa se o menu continua."""
+    """Executa a ação da opção escolhida e informa se o menu continua."""
     acoes = {
         1: cadastrar_pessoa,
         2: consultar_pessoa,
@@ -180,7 +180,7 @@ def processar_opcao(cadastro, op):
 
 
 def executar():
-    """Executa o menu principal da aplicaÃ§Ã£o."""
+    """Executa o menu principal da aplicação."""
     cadastro = CadastroPessoas(criar_repositorio())
     op = 0
 

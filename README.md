@@ -1,34 +1,34 @@
-# Cadastro de Pessoas â€” GQS
+# Cadastro de Pessoas — GQS
 
-Projeto evolutivo da disciplina **GestÃ£o da Qualidade de Software**, UTFPR campus
-Medianeira, 2026/2. Comecei com o cÃ³digo-base das aulas e fui acrescentando
-testes, separaÃ§Ã£o entre regras de negÃ³cio e armazenamento, anÃ¡lise estÃ¡tica,
-mÃ©tricas de complexidade, Docker, MySQL e colaboraÃ§Ã£o por Pull Request.
+Projeto evolutivo da disciplina **Gestão da Qualidade de Software**, UTFPR campus
+Medianeira, 2026/2. Comecei com o código-base das aulas e fui acrescentando
+testes, separação entre regras de negócio e armazenamento, análise estática,
+métricas de complexidade, Docker, MySQL e colaboração por Pull Request.
 
-RepositÃ³rio: https://github.com/ClerAndrade/gqs-cadatro-pessoas
+Repositório: https://github.com/ClerAndrade/gqs-cadatro-pessoas
 
 ## O que o programa faz
 
-Ã‰ um menu de terminal com seis opÃ§Ãµes: cadastrar, consultar, alterar, listar,
-analisar e sair. A camada de regras (`CadastroPessoas`) nÃ£o sabe onde os dados
-estÃ£o guardados: ela conversa com o contrato `RepositorioPessoas`. Na execuÃ§Ã£o
-normal uso a implementaÃ§Ã£o em memÃ³ria; quando quero testar persistÃªncia, troco
-para a implementaÃ§Ã£o MySQL sem mexer nas regras.
+É um menu de terminal com seis opções: cadastrar, consultar, alterar, listar,
+analisar e sair. A camada de regras (`CadastroPessoas`) não sabe onde os dados
+estão guardados: ela conversa com o contrato `RepositorioPessoas`. Na execução
+normal uso a implementação em memória; quando quero testar persistência, troco
+para a implementação MySQL sem mexer nas regras.
 
 ## Arquivos principais
 
 | Arquivo | Para que serve |
 | --- | --- |
 | `src/pessoa.py` | entidade `Pessoa` |
-| `src/cadastro.py` | regras de negÃ³cio do cadastro |
+| `src/cadastro.py` | regras de negócio do cadastro |
 | `src/repositorio_pessoas.py` | contrato abstrato (ABC) |
-| `src/repositorio_pessoas_memoria.py` | persistÃªncia em lista, usada por padrÃ£o |
+| `src/repositorio_pessoas_memoria.py` | persistência em lista, usada por padrão |
 | `src/repositorio_pessoas_mysql.py` | DAO MySQL (insert, select, update) |
-| `src/main.py` | menu e escolha do repositÃ³rio |
-| `infra/compose.yaml` | MySQL principal + rÃ©plica |
-| `infra/README.md` | como subir o banco e montar a replicaÃ§Ã£o |
+| `src/main.py` | menu e escolha do repositório |
+| `infra/compose.yaml` | MySQL principal + réplica |
+| `infra/README.md` | como subir o banco e montar a replicação |
 | `tests/` | testes PyTest, inclusive DAO com conector falso |
-| `documentos/` | checklists, mÃ©tricas, rastreabilidade e relatÃ³rio |
+| `documentos/` | checklists, métricas, rastreabilidade e relatório |
 
 ## Preparando o ambiente (PowerShell)
 
@@ -41,12 +41,12 @@ python -m pre_commit install
 ```
 
 O `pre-commit install` precisa ser repetido em cada clone novo: o hook fica em
-`.git/hooks` e nÃ£o vai para o repositÃ³rio. O arquivo `.pre-commit-config.yaml`
-sim, e jÃ¡ vem versionado.
+`.git/hooks` e não vai para o repositório. O arquivo `.pre-commit-config.yaml`
+sim, e já vem versionado.
 
 ## Executando
 
-Modo padrÃ£o, sem banco:
+Modo padrão, sem banco:
 
 ```powershell
 python src\main.py
@@ -65,11 +65,11 @@ $env:DB_NAME = "cadastro"
 python src\main.py
 ```
 
-A senha acima Ã© a do laboratÃ³rio, usada sÃ³ no compose didÃ¡tico. Em qualquer
-outro lugar, troque por uma senha local e nunca commite `.env` (jÃ¡ estÃ¡ no
+A senha acima é a do laboratório, usada só no compose didático. Em qualquer
+outro lugar, troque por uma senha local e nunca commite `.env` (já está no
 `.gitignore`).
 
-## VerificaÃ§Ãµes
+## Verificações
 
 ```powershell
 python -m pytest -v
@@ -80,28 +80,28 @@ python -m pre_commit run --all-files
 ```
 
 Estado atual: **23 testes passando**, **Pylint 10.00/10** e **RADON A**
-(mÃ©dia 1,80; nenhum bloco acima de A). Os nÃºmeros e o antes/depois estÃ£o em
+(média 1,80; nenhum bloco acima de A). Os números e o antes/depois estão em
 `documentos/checklist-pylint.md` e `documentos/metricas-radon.md`.
 
-Na raiz tambÃ©m tem um `.venv` usado nos hooks do pre-commit. Os comandos acima
-assumem que ele jÃ¡ foi criado; se vocÃª estiver em outro clone, siga o passo de
-preparaÃ§Ã£o.
+Na raiz também tem um `.venv` usado nos hooks do pre-commit. Os comandos acima
+assumem que ele já foi criado; se você estiver em outro clone, siga o passo de
+preparação.
 
-## ColaboraÃ§Ã£o
+## Colaboração
 
-- PR #1 â€” testes automatizados, integrado em 21/10/2026:
+- PR #1 — testes automatizados, integrado em 21/10/2026:
   https://github.com/ClerAndrade/gqs-cadatro-pessoas/pull/1
-- PR #2 â€” separaÃ§Ã£o do armazenamento, feito pelo So1d e integrado em 04/11:
+- PR #2 — separação do armazenamento, feito pelo So1d e integrado em 04/11:
   https://github.com/ClerAndrade/gqs-cadatro-pessoas/pull/2
-- PR #1 no repositÃ³rio do So1d â€” persistÃªncia MySQL, aberto por ClerAndrade e
+- PR #1 no repositório do So1d — persistência MySQL, aberto por ClerAndrade e
   integrado em 18/11: https://github.com/So1d/gqs-cadatro-pessoas/pull/1
-- PR #3 â€” contribuiÃ§Ã£o final do So1d trazendo o MySQL para este repositÃ³rio,
+- PR #3 — contribuição final do So1d trazendo o MySQL para este repositório,
   revisada e integrada em 19/11:
   https://github.com/ClerAndrade/gqs-cadatro-pessoas/pull/3
 
-Detalhes de autoria, incluindo o problema de identidade `L16-M01` na mÃ¡quina do
-laboratÃ³rio, estÃ£o em `documentos/rastreabilidade.md`.
+Detalhes de autoria, incluindo o problema de identidade `L16-M01` na máquina do
+laboratório, estão em `documentos/rastreabilidade.md`.
 
 ## Entrega
 
-O relatÃ³rio tÃ©cnico em PDF estÃ¡ em `documentos/relatorio-tecnico.pdf`.
+O relatório técnico em PDF está em `documentos/relatorio-tecnico.pdf`.
