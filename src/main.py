@@ -1,16 +1,19 @@
-"""Programa para cadastro de pessoas. Uso didático na disciplina de GQS."""
+"""Programa para cadastro de pessoas. Uso didÃ¡tico na disciplina de GQS."""
+
+import os
 
 from cadastro import CadastroPessoas
 from repositorio_pessoas_memoria import RepositorioPessoasMemoria
 from repositorio_pessoas_mysql import RepositorioPessoasMySQL
 
-USAR_MYSQL = False
-
 
 def criar_repositorio():
-    """Escolhe o repositorio conforme a constante USAR_MYSQL."""
-    if USAR_MYSQL:
+    """Escolhe o repositÃ³rio pela variÃ¡vel CADASTRO_REPOSITORIO."""
+    tipo = os.environ.get("CADASTRO_REPOSITORIO", "memoria").strip().lower()
+    if tipo == "mysql":
         return RepositorioPessoasMySQL.a_partir_do_ambiente()
+    if tipo != "memoria":
+        print(f"RepositÃ³rio {tipo!r} desconhecido; usando memoria.")
     return RepositorioPessoasMemoria()
 
 
@@ -150,34 +153,40 @@ def analisar_pessoa(cadastro):
     else:
         analisar_faixa_etaria(pessoa.get_idade())
         analisar_email(pessoa.get_email())
-        analisar_contato(
-            pessoa.get_idade(),
-            pessoa.get_email()
-        )
+        analisar_contato(pessoa.get_idade(), pessoa.get_email())
+
+
+def processar_opcao(cadastro, op):
+    """Executa a aÃ§Ã£o da opÃ§Ã£o escolhida e informa se o menu continua."""
+    acoes = {
+        1: cadastrar_pessoa,
+        2: consultar_pessoa,
+        3: alterar_pessoa,
+        4: listar_pessoas,
+        5: analisar_pessoa,
+    }
+
+    if op == 6:
+        print("Saindo...")
+        return False
+
+    acao = acoes.get(op)
+    if acao is None:
+        print("Opcao invalida")
+    else:
+        acao(cadastro)
+
+    return True
 
 
 def executar():
-    """Executa o menu principal da aplicação."""
+    """Executa o menu principal da aplicaÃ§Ã£o."""
     cadastro = CadastroPessoas(criar_repositorio())
     op = 0
 
     while op != 6:
         op = exibir_menu()
-
-        if op == 1:
-            cadastrar_pessoa(cadastro)
-        elif op == 2:
-            consultar_pessoa(cadastro)
-        elif op == 3:
-            alterar_pessoa(cadastro)
-        elif op == 4:
-            listar_pessoas(cadastro)
-        elif op == 5:
-            analisar_pessoa(cadastro)
-        elif op == 6:
-            print("Saindo...")
-        else:
-            print("Opcao invalida")
+        processar_opcao(cadastro, op)
 
     print("Fim do programa")
 
