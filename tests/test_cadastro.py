@@ -1,6 +1,32 @@
-"""Testes das operacoes de CadastroPessoas com o repositorio em memoria."""
+"""Testes das operacoes de CadastroPessoas."""
 
 from cadastro import CadastroPessoas
+from pessoa import Pessoa
+from repositorio_pessoas import RepositorioPessoas
+
+
+class RepositorioEspiao(RepositorioPessoas):
+    """Registra as chamadas para conferir a delegacao da alteracao."""
+
+    def __init__(self):
+        self.pessoa = Pessoa("Ana", 20, "ana@example.com")
+        self.alteracoes = []
+
+    def cadastrar(self, pessoa):
+        self.pessoa = pessoa
+
+    def buscar(self, nome):
+        if nome == self.pessoa.get_nome():
+            return self.pessoa
+        return None
+
+    def listar(self):
+        return [self.pessoa]
+
+    def alterar(self, nome, nova_pessoa):
+        self.alteracoes.append((nome, nova_pessoa))
+        self.pessoa = nova_pessoa
+        return True
 
 
 def test_cadastrar_pessoa():
@@ -74,3 +100,15 @@ def test_alterar_pessoa_inexistente():
     """Retorna None ao alterar nome nao cadastrado."""
     cadastro = CadastroPessoas()
     assert cadastro.alterar("Ana", "Bia", 30, "bia@example.com") is None
+
+
+def test_alterar_delega_ao_repositorio():
+    """A regra de negocio nao altera o objeto diretamente."""
+    repositorio = RepositorioEspiao()
+    cadastro = CadastroPessoas(repositorio)
+
+    alterada = cadastro.alterar("Ana", "Bia", 30, "bia@example.com")
+
+    assert alterada is repositorio.pessoa
+    assert repositorio.alteracoes[0][0] == "Ana"
+    assert repositorio.alteracoes[0][1].get_nome() == "Bia"
