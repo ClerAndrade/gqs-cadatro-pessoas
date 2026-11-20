@@ -1,50 +1,60 @@
-# Checklist de análise estática - Atividade 6
+# CHECKLIST DE INSPEÇÃO
 
-**Projeto:** Cadastro de Pessoas
-**Branch:** `aula6/analise-estatica`
-**Ferramenta:** PyLint 4.1.3
-**Aluno(a):** Cler Elis Andrade
+Este formulário tem como objetivo padronizar o registro da inspeção, facilitando a identificação, descrição e acompanhamento dos achados observados. Preencha as informações de forma objetiva, completa e legível, garantindo que cada item avaliado possa ser compreendido e tratado adequadamente.
 
-Este checklist registra a análise estática do código antes e depois das
-correções, seguindo o ciclo trabalhado em aula:
-*executar -> analisar -> corrigir -> executar novamente*.
+## A. Clareza e legibilidade
 
-## 1. Execução inicial (antes das correções)
+- [ ] **A1** – Os nomes das variáveis deixam claro o seu significado?
+- [ ] **A2** – É possível compreender o que cada trecho faz sem executar o programa?
+- [ ] **A3** – Textos e valores literais aparecem repetidos ao longo do código?
 
-| Item verificado | Situação | Apontamento do PyLint |
-| --- | --- | --- |
-| Docstrings em todas as funções e métodos | Pendente | C0116 (`missing-function-docstring`) |
-| Nomes em snake_case (métodos e atributos) | Pendente | C0103 (`invalid-name`) |
-| Sem espaços em branco no fim das linhas | Pendente | C0303 (`trailing-whitespace`) |
-| Importações organizadas | OK | Nenhum apontamento |
-| Código morto / linhas longas | OK | Nenhum apontamento |
-| Nota do PyLint na execução inicial | Registrada | 8.74/10 |
+## B. Duplicação
 
-## 2. Decisões de correção
+- [ ] **B1** – Existe código repetido em pontos diferentes do programa?
+- [ ] **B2** – A mesma regra está implementada em mais de um lugar?
+- [ ] **B3** – A busca de uma pessoa aparece repetida?
+- [ ] **B4** – A impressão dos dados de uma pessoa aparece repetida?
 
-| Apontamento | Decisão adotada |
-| --- | --- |
-| C0116 - docstrings ausentes | Criar docstring descritiva em cada método |
-| C0103 - `getNome`, `getIdade`, ... | Renomear os métodos para snake_case (`get_nome`, ...) |
-| C0303 - espaço no fim da linha | Remover o espaço em branco |
+## C. Estrutura e complexidade
 
-## 3. Reexecução (após as correções)
+- [ ] **C1** – Há blocos muito extensos ou difíceis de acompanhar?
+- [ ] **C2** – É possível identificar rapidamente onde começa e termina cada responsabilidade?
+- [ ] **C3** – Menu, leitura de dados, regras e exibição estão misturados no mesmo trecho?
 
-| Item verificado | Situação |
-| --- | --- |
-| Docstrings em todas as funções e métodos | OK |
-| Nomes em snake_case (métodos e atributos) | OK |
-| Sem espaços em branco no fim das linhas | OK |
-| Nota final do PyLint | 10.00/10 |
+## D. Entrada e validação de dados
 
-## 4. Comparação das execuções
+- [ ] **D1** – Entradas inválidas podem causar comportamento inesperado?
+- [ ] **D2** – Existe verificação de faixa ou de plausibilidade para a idade?
+- [ ] **D3** – Campos obrigatórios podem ser gravados vazios?
 
-| Execução | Apontamentos | Nota |
-| --- | --- | --- |
-| Antes das correções | 18 (10 docstrings, 7 nomes, 1 espaço) | 8.74/10 |
-| Depois das correções | 0 | 10.00/10 |
+## E. Consistência dos dados
 
-## 5. Observação
+- [ ] **E1** – Os dados de uma mesma pessoa estão espalhados em variáveis que podem se desencontrar?
+- [ ] **E2** – Existe regra clara para identificar unicamente uma pessoa?
+- [ ] **E3** – Há política definida para nomes duplicados?
 
-As alterações foram feitas no código, e não apenas na configuração da
-ferramenta: nenhuma regra foi desabilitada no PyLint para obter a nota.
+## F. Manutenibilidade e evolução
+
+- [ ] **F1** – Acrescentar um novo atributo à pessoa exigiria alterar muitos pontos do código?
+- [ ] **F2** – Uma nova operação faria o bloco principal crescer significativamente?
+- [ ] **F3** – Alterar a interface com o usuário exigiria alterar a lógica do sistema?
+
+## G. Comportamento e possíveis defeitos
+
+- [ ] **G1** – O comportamento para uma pessoa inexistente é adequado e informativo?
+- [ ] **G2** – Operações equivalentes tratam os mesmos dados de maneira coerente entre si?
+
+---
+
+## Registro de achados
+
+Registre cada achado separadamente, indicando o local, a descrição objetiva da situação observada e a evidência correspondente, quando aplicável, observando o seguinte formato de apresentação:
+
+| ID | Local | Categoria | Achado | Evidência | Consequência / Risco | Sugestão |
+|---|---|---|---|---|---|---|
+| | | | | | | |
+| | | | | | | |
+| | | | | | | |
+| | | | | | | |
+
+Após o registro, revise as informações para garantir clareza, consistência e rastreabilidade.
