@@ -1,125 +1,123 @@
 # Relatório técnico — Cadastro de Pessoas
 
-**Disciplina:** Gestão da Qualidade de Software — UTFPR, campus Medianeira, 2026/2  
+**Disciplina:** Gestão da Qualidade de Software · UTFPR, campus Medianeira · 2026/2  
 **Autor:** Cler Andrade  
-**Data:** 19 de novembro de 2026  
+**Última revisão:** 20 de novembro de 2026  
 **Repositório:** https://github.com/ClerAndrade/gqs-cadatro-pessoas
 
-## 1. O que era para entregar
+---
 
-O trabalho não era criar um projeto novo do zero, e sim continuar o mesmo
-Cadastro de Pessoas ao longo da disciplina, deixando cada prática registrada no
-Git: funções e classes, análise estática com Pylint e RADON, padrões de
-commit, hooks de pre-commit, testes com PyTest, colaboração com outro
-estudante por fork e Pull Request, camada de persistência com DAO e MySQL,
-Docker Compose, documentação e um diário/how-to em PDF.
+Não escrevi isto de uma vez no fim. É o que ficou registrado enquanto eu voltava
+ao projeto para conferir as coisas: abri o `git log`, reli os slides, rodei as
+ferramentas e fui anotando onde cada prática aparece. Se algum comando aqui
+aparece duas vezes, é porque eu rodei mesmo — primeiro para descobrir o que
+estava errado, depois para confirmar que tinha ficado certo.
 
-O repositório que usei foi `gqs-cadatro-pessoas` (o nome do remoto mesmo está
-assim, com "cadatro"). Ele já existia e já tinha histórico, então continuei a
-partir dele em vez de abrir outro.
+## 19/11: arrumando o que estava aberto
 
-## 2. Diário de desenvolvimento
+Quando entrei no repositório, a `main` estava um commit atrás da `origin/main`
+e o PR #3 do So1d ainda estava pendente. Antes de mexer em qualquer arquivo
+rodei `git status` e `git log --oneline`. O PR devolvia o DAO MySQL para o meu
+repositório; em vez de deixar ele aberto, puxei para `review/pr-3`, revisei e
+fechei com `e289160 Merge pull request #3 from So1d/main`.
 
-### 02/09 a 06/10 — o ponto de partida
+Depois disso fui consertando uma coisa por vez, sempre com commit separado:
 
-O código-base e as primeiras features foram publicados pelo professor
-Juliano. Tem menu, `Pessoa`, `CadastroPessoas`, operações de consulta, alteração
-e lista. Não sou autor desses commits e não mexi neles para fingir autoria.
+- `5794cc2` — passei os métodos para `snake_case`, escrevi as docstrings e tirei
+  do `.pylintrc` as regras que estavam desligadas para o Pylint "dar 10";
+- `2441169` — quebrei a cadeia de `if/elif` do menu. `executar()` saiu de B(8)
+  para A(2) no RADON depois que o dicionário de ações virou `processar_opcao()`;
+- `4629f9f` — trouxe o `compose.yaml` da Aula 11 para `infra/`, com o manual do
+  banco e as dependências de qualidade no `requirements.txt`;
+- `73e525c` — subi a suíte de 23 testes, incluindo o DAO com conector falso;
+- `b50847c` — o `.pylintrc` passou a dizer `py-version=3.15`, que é a versão que
+  realmente roda na máquina;
+- `ac055fd`, `3b80a72`, `c440534`, `2f152d9` — documentação, relatório em PDF e
+  uma correção de acentos que tinha saído torto.
 
-### 14/10 — Aula 9, testes automatizados
+## 20/11: conferindo com o enunciado e com os slides
 
-Preparei o ambiente e escrevi os primeiros testes do cadastro. O merge do PR
-#1 em 21/10 fechou essa etapa. A máquina do laboratório estava com o Git
-configurado como `L16-M01 <l16-m01@laboratorio.local>`, e foi com essa
-identidade que esses dois commits saíram. Mais adiante explico como isso foi
-tratado.
+Hoje recebi a versão final do enunciado e comparei com o que estava no repo.
+Também reli os PDFs das Aulas 1 a 12. O resultado dessa conferência está em
+`documentos/auditoria-final.md`, mas o resumo é este:
 
-### 03/11 a 04/11 — Aula 10, separar regras de armazenamento
+- o modelo de `documentos/checklist-inspecao.md` já existia, mas o formulário
+  **preenchido** na Aula 6 estava só no repositório paralelo. Copiei para
+  `checklist-inspecao-preenchido-aula6.md`. Quase fiz besteira de copiar por
+  cima do modelo; vi no `git diff` e recuperei o original com `git checkout`,
+  deixando os dois arquivos;
+- a Aula 8 pedia `tests/test_pessoa.py`. Criei quatro testes de getters/setters
+  e a suíte foi para 27;
+- os commits feitos na máquina do laboratório apareciam como `L16-M01`. Coloquei
+  um `.mailmap` e liguei `git config log.mailmap true`;
+- fechei a conferência com uma tag anotada `v1.0.0-entrega`, para marcar o ponto
+  de entrega como linha de base.
 
-O colega Luis Dutra (So1d) contribuiu com o contrato `RepositorioPessoas` e a
-implementação em memória pelo PR #2. Eu revisei e integrei em 04/11. Antes
-disso, `CadastroPessoas` guardava tudo numa lista própria; depois, passou a
-delegar para o repositório. Essa separação foi o que permitiu trocar memória
-por MySQL sem reescrever as regras.
+Os slides bateram com o que já tinha, com um ou outro reforço. Aula 4 e 5 eram
+RADON — está em `metricas-radon.md`. Aula 6 era Pylint — está no
+`checklist-pylint.md` e no formulário preenchido que acabei de trazer. Aula 8
+queria PyTest e o teste da entidade — agora existe. Aula 9 e 10 falavam de itens
+de configuração, fork e Pull Request — além dos PRs, tem a tag. Aula 11 e 12
+eram MySQL, réplica e DAO — estão em `infra/` e em
+`src/repositorio_pessoas_mysql.py`. Os exercícios de Selenium ficaram de fora,
+como o próprio enunciado final permite.
 
-### 11/11 a 18/11 — Aula 11 e 12, Docker, MySQL e colaboração
+## Coisas que deram trabalho
 
-Montei o principal e a réplica MySQL 8.4.13 com o compose da Aula 11, com
-GTID e volumes separados. Na Aula 12 escrevi o DAO `RepositorioPessoasMySQL`
-no repositório do colega: `INSERT`, `SELECT` e `UPDATE`, com leitura das
-variáveis de ambiente e `ClientFlag.FOUND_ROWS` para o `UPDATE` devolver
-quantas linhas foram afetadas. Abri o PR #1 no repositório dele, que foi
-integrado em 18/11. No mesmo período corrigi o `alterar()` para delegar a
-escrita ao repositório em vez de mudar diretamente o objeto retornado pela
-busca.
+**O README mentia.** Mandava `python cadastro.py`, mas o arquivo sempre foi
+`src/main.py`. Agora o README diz como criar a `.venv`, instalar, rodar testes e
+subir o banco.
 
-Em 18/11 o So1d abriu o PR #3 aqui, devolvendo essa persistência para o meu
-repositório.
+**O CONTRIBUTING mandava clonar o repo do professor.** Foi trocado pelo fluxo
+que usamos de verdade: branch, commit, push, PR e os quatro Pull Requests da
+atividade.
 
-### 19/11 — revisão, consolidação e arrumos
+**`alterar()` mudava o objeto na mão.** A função antiga buscava a pessoa e
+chamava os setters nela. Passei a montar uma `Pessoa` nova e chamar
+`repositorio.alterar()`. O teste `test_alterar_delega_ao_repositorio` cobre isso.
+Sem essa separação, trocar memória por MySQL ia exigir reescrever a regra de
+negócio.
 
-Foi o dia de maior volume, e cada mudança virou um commit separado:
+**Pylint com exceções escondidas.** A configuração anterior desligava
+`invalid-name`, `missing-function-docstring`, `missing-class-docstring` e
+`trailing-whitespace`. Tirei as exceções, renomeei os métodos e escrevi as
+docstrings. A nota foi de 9,83 para 10,00. O antes/depois está no checklist.
 
-| Commit | O que mudou |
-| --- | --- |
-| `e289160` | merge revisado do PR #3, com mensagem de merge real |
-| `5794cc2` | nomes em `snake_case`, docstrings e Pylint sem exceções escondidas |
-| `2441169` | `executar()` de B(8) para A(2) com dicionário de ações |
-| `4629f9f` | `infra/compose.yaml`, manual do banco, dependências de qualidade |
-| `73e525c` | suíte de 23 testes, incluindo DAO com conector falso |
-| `b50847c` | Pylint passou a usar a versão 3.15 que realmente roda aqui |
-| `ac055fd` | README, CONTRIBUTING, métricas e rastreabilidade |
+**RADON apontava um bloco B.** Era o `executar()` com a cadeia de opções do
+menu. A média do projeto caiu de 1,85 para 1,80 e não sobrou nenhum bloco B ou
+C em `src/`.
 
-## 3. Problemas que encontrei e como resolvi
+**pre-commit não verificava teste nenhum.** Só chamava o Pylint, e com o Python
+do sistema, que não tem as dependências do projeto. Apontei os três hooks para
+`.venv/Scripts/python.exe` e incluí pytest e RADON. Eles rodaram nos commits
+desta auditoria.
 
-- **README mentia sobre a execução.** Mandava `python cadastro.py`, mas o
-  arquivo sempre foi `src/main.py`. Corrigi e acrescentei os comandos de
-  ambiente, MySQL e verificações.
-- **CONTRIBUTING mandava clonar o repositório do professor.** Agora fala do
-  fluxo que usamos de verdade e dos quatro PRs envolvidos.
-- **`alterar()` mudava o objeto na mão.** A versão antiga buscava a pessoa e
-  chamava os setters nela. Agora monta uma `Pessoa` nova e chama
-  `repositorio.alterar()`. O teste `test_alterar_delega_ao_repositorio` cobre
-  essa delegação.
-- **Pylint com regras desligadas.** A configuração anterior desabilitava
-  `invalid-name`, `missing-function-docstring`, `missing-class-docstring` e
-  `trailing-whitespace`. Tirei as exceções, renomeei os métodos e escrevi as
-  docstrings. Nota foi de 9,83 para 10,00. O detalhamento está em
-  `documentos/checklist-pylint.md`.
-- **RADON apontava um bloco B.** `executar()` tinha complexidade 8 por causa
-  da cadeia de `if/elif` do menu. Extraí `processar_opcao()` e deixei o laço
-  simples. Média do projeto caiu de 1,85 para 1,80 e não sobrou bloco B.
-- **pre-commit não verificava testes nem métricas.** Só rodava Pylint, e com o
-  Python do sistema, que não tem as dependências. Apontei os três hooks para
-  `.venv/Scripts/python.exe` e incluí pytest e RADON. Os três passaram nos
-  commits acima.
-- **Faltava infraestrutura no repositório.** O compose da Aula 11 existia no
-  fork, mas não aqui. Entrou em `infra/compose.yaml` com um README de como
-  subir, criar a tabela e configurar a réplica.
-- **Só dois testes.** Subiram para 23, cobrindo repositório em memória,
-  escolha de repositório no `main` e DAO MySQL com `mysql.connector.connect`
-  substituído por um objeto falso. Não é necessário ter banco rodando para
-  rodar a suíte.
-- **Identidade de autor errada.** Resolvida para os commits novos e
-  documentada; os commits já publicados não foram reescritos.
+**Acentos corrompidos.** O PowerShell 5.1 leu meus `.ps1` sem BOM como ANSI e
+o PDF saiu com "Relat?rio" e "gest?o". Corrigi os arquivos de `cp1252` para
+`utf-8` e passei a salvar os scripts novos com BOM UTF-8. O PDF foi regerado.
 
-## 4. Como reproduzir
+**Docker.** O daemon não subiu na máquina (`docker info` falhou em conectar no
+pipe do Linux). Validei o compose com `docker compose config --quiet`, que
+devolveu 0, e testei o DAO com um conector falso. O teste com MySQL de verdade
+ficou pendente e está anotado como limitação.
 
-No PowerShell, a partir da pasta do projeto:
+## Como reproduzir
+
+No PowerShell, na raiz do projeto:
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 python -m pre_commit install
-python -m pytest -v
+python -m pytest -q
 python -m pylint src
 python -m radon cc src -a -s
 python src\main.py
 ```
 
-Para usar o banco, primeiro `Set-Location infra`, `docker compose up -d` e a
-criação da tabela que está em `infra/README.md`. Depois, na raiz:
+Se quiser usar o banco, entre em `infra`, rode `docker compose up -d`, crie a
+tabela conforme `infra/README.md` e volte para a raiz:
 
 ```powershell
 $env:CADASTRO_REPOSITORIO = "mysql"
@@ -131,66 +129,60 @@ $env:DB_NAME = "cadastro"
 python src\main.py
 ```
 
-A senha é a do laboratório, igual à do compose didático. Para validar o
-compose sem subir contêiner, rodei `docker compose config --quiet` na pasta
-`infra` e o código de saída foi 0.
+A senha é a mesma do compose didático. Para só conferir o arquivo sem subir
+contêiner: `Set-Location infra`, `docker compose config --quiet`.
 
-## 5. Evidências
+## O que conferi de novo hoje
 
-| Evidência | Onde conferir |
-| --- | --- |
-| Testes automatizados | 23 passos em `tests/`, comando `python -m pytest -v` |
-| Análise estática | `documentos/checklist-pylint.md`, nota 10,00/10 |
-| Complexidade | `documentos/metricas-radon.md`, média A (1,80) |
-| Docker / replicação | `infra/compose.yaml` e `infra/README.md` |
-| DAO MySQL | `src/repositorio_pessoas_mysql.py` e `tests/test_repositorio_mysql.py` |
-| Colaboração | PR #1 e #2 aqui, PR #1 no repo do So1d, PR #3 integrado |
-| Histórico | `git log` do repositório, mensagens `feat`, `fix`, `refactor`, `test`, `chore`, `docs` |
+```
+python -m pytest -q        -> 27 passed in 0.16s
+python -m pylint src       -> 10.00/10
+python -m radon cc src -a  -> 49 blocos, média A (1,80)
+git status --short --branch -> ## main...origin/main
+docker compose config --quiet -> código de saída 0
+```
 
-Links:
+O PDF em `documentos/relatorio-tecnico.pdf` saiu deste Markdown. Deixei o HTML
+intermediário em `documentos/relatorio-tecnico.html` para conferir o conteúdo
+sem precisar abrir o leitor de PDF.
+
+## Autoria
+
+Parte dos commits de 14/10 e 17/11 saiu com `L16-M01
+<l16-m01@laboratorio.local>` porque era a identidade configurada na máquina do
+laboratório. Hoje coloquei no `.mailmap`:
+
+```
+Cler Andrade <115158502+ClerAndrade@users.noreply.github.com> L16-M01 <l16-m01@laboratorio.local>
+```
+
+e ativei `git config log.mailmap true`. Com isso, `git log` e `git shortlog`
+mostram **Cler Andrade** no lugar daquele nome estranho. Não reescrevi os
+objetos dos commits antigos: eles sustentam os Pull Requests já mesclados no
+GitHub e mudar os hashes quebraria essa evidência. Os commits do professor
+continuam com o nome dele porque são o ponto de partida permitido; o commit do
+colega continua com o nome dele porque é a prova da colaboração. Todo commit que
+eu fiz de 19/11 em diante sai como Cler Andrade.
+
+Os PRs que compõem a evidência:
 
 - https://github.com/ClerAndrade/gqs-cadatro-pessoas/pull/1
 - https://github.com/ClerAndrade/gqs-cadatro-pessoas/pull/2
 - https://github.com/ClerAndrade/gqs-cadatro-pessoas/pull/3
 - https://github.com/So1d/gqs-cadatro-pessoas/pull/1
 
-## 6. Autoria
+## As 17 semanas
 
-Três commits publicados em 14/10 e 17/11 aparecem como `L16-M01
-<l16-m01@laboratorio.local>` por causa da configuração da máquina do
-laboratório. O PR da Aula 12 foi aberto pela conta `ClerAndrade` e integrado
-pelo colega, o que comprova de quem foi a iniciativa. Mantive esses commits do
-jeito que estão: reescrever autoria em histórico já mesclado apagaria a
-evidência dos PRs.
+Não tenho como apresentar um commit meu em cada uma das 17 semanas letivas. O
+histórico começa com os commits do professor e a minha participação aparece a
+partir de 14/10. Deixei isso registrado em `plano-semanal.md` e em
+`rastreabilidade.md`, sem inventar data nem commit vazio para completar o
+quadro. O que der para fazer é continuar commitando cada atividade real que
+aparecer.
 
-Em 19/11 configurei o repositório com:
+## O que ficou de fora
 
-```powershell
-git config user.name "Cler Andrade"
-git config user.email "115158502+ClerAndrade@users.noreply.github.com"
-```
-
-Daí em diante todo commit sai com **Cler Andrade** como autor, incluindo o
-merge do PR #3.
-
-## 7. Sobre as 17 semanas
-
-Não tenho como mostrar um commit meu por semana letiva desde 02/09: o
-histórico inicial é do professor e o meu começa em 14/10. Não inventei data
-antiga nem commit vazio para completar o quadro. O que deixei registrado foi
-um plano honesto com atividades reais para as semanas restantes em
-`documentos/plano-semanal.md`, e a partir de agora cada atividade vira um
-commit quando acontecer.
-
-## 8. Limitações
-
-Não subi os contêineres durante esta revisão porque o Docker Desktop não
-estava com o daemon ativo (`docker info` falhou em conectar no pipe do Linux).
-O compose foi validado sintaticamente e o DAO foi testado com um conector
-falso, mas o teste de ponta a ponta com MySQL rodando ficou para a próxima
-sessão. Isso não muda os resultados de Pylint, RADON e PyTest, que rodaram
-localmente.
-
-O PDF foi gerado a partir deste Markdown com `markdown` e WeasyPrint. O HTML
-intermediário está junto, em `documentos/relatorio-tecnico.html`, para dar para
-conferir o conteúdo sem abrir o PDF.
+O teste ponta a ponta com o MySQL rodando. O código do DAO e o compose estão
+prontos e foram validados separadamente, mas o Docker Desktop não estava com o
+daemon ativo durante esta revisão. Assim que ele subir, o comando é o que está
+em `infra/README.md`; não muda nada do que foi medido acima.
