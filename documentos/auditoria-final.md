@@ -23,7 +23,7 @@ estado real do repositório (`git status`, `git log`, arquivos versionados).
 | Rastreabilidade (GCS) | `documentos/rastreabilidade.md`, PRs, commits e tag de entrega | OK |
 | Autoria identificável | `.mailmap`, commits novos como Cler Andrade, PRs verificáveis | OK, com ressalva histórica |
 | 1 commit próprio por semana letiva (17) | histórico real começa em 14/10 | **Não atendido no passado**; não foi fabricado |
-| Relatório técnico em PDF | `documentos/relatorio-tecnico.pdf` | OK |
+| Relatório técnico em PDF | `documentos/relatorio-tecnico.pdf`, com capa ABNT/UTFPR | OK |
 | Selenium | fora do escopo, conforme item 9 do enunciado | Não versionado no projeto |
 
 Sobre o item quantitativo: existem vários commits meus na mesma semana, mas
