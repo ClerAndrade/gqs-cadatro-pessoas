@@ -134,7 +134,7 @@ A colaboração foi registrada em quatro Pull Requests. A Tabela 6 apresenta a d
 
 Tabela 6: Pull Requests da atividade.
 
-Os pontos revisados em #3 foram a ausência de delegação em `alterar()`, o uso direto de `mysql.connector` no programa principal e a falta de fechamento de cursor e conexão. A versão mesclada usa o contrato, a variável de ambiente e o fechamento em `finally`. Os-commits de consolidação deste repositório estão na Tabela 7.
+Os pontos revisados em #3 foram a ausência de delegação em `alterar()`, o uso direto de `mysql.connector` no programa principal e a falta de fechamento de cursor e conexão. A versão mesclada usa o contrato, a variável de ambiente e o fechamento em `finally`. Os commits de consolidação deste repositório estão na Tabela 7.
 
 | Commit | Data | Mensagem |
 |---|---|---|
