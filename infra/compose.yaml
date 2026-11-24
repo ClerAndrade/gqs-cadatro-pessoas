@@ -10,7 +10,7 @@ services:
       "--skip-name-resolve=ON"
     ]
     environment:
-      MYSQL_ROOT_PASSWORD: root_lab_2026
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?defina MYSQL_ROOT_PASSWORD no ambiente}
     ports: ["127.0.0.1:3307:3306"]
     volumes:
       - principal-data:/var/lib/mysql
@@ -38,7 +38,7 @@ services:
       "--skip-name-resolve=ON"
     ]
     environment:
-      MYSQL_ROOT_PASSWORD: root_lab_2026
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?defina MYSQL_ROOT_PASSWORD no ambiente}
     ports: ["127.0.0.1:3308:3306"]
     volumes:
       - replica-data:/var/lib/mysql
@@ -58,3 +58,4 @@ services:
 volumes:
   principal-data:
   replica-data:
+

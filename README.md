@@ -60,14 +60,12 @@ $env:CADASTRO_REPOSITORIO = "mysql"
 $env:DB_HOST = "localhost"
 $env:DB_PORT = "3307"
 $env:DB_USER = "root"
-$env:DB_PASSWORD = "root_lab_2026"
+$env:DB_PASSWORD = $env:MYSQL_ROOT_PASSWORD
 $env:DB_NAME = "cadastro"
 python src\main.py
 ```
 
-A senha acima é a do laboratório, usada só no compose didático. Em qualquer
-outro lugar, troque por uma senha local e nunca commite `.env` (já está no
-`.gitignore`).
+A senha vem da variável `MYSQL_ROOT_PASSWORD`, definida no ambiente local a partir de `infra/.env.example`. Nunca commite `.env` (já está no `.gitignore`).
 
 ## Verificações
 
@@ -105,3 +103,4 @@ laboratório, estão em `documentos/rastreabilidade.md`.
 ## Entrega
 
 O relatório técnico em PDF está em `documentos/relatorio-tecnico.pdf`.
+

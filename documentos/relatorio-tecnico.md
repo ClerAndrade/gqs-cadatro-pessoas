@@ -1,12 +1,12 @@
 1 Repositório e participantes
 
-O Projeto Integrador foi desenvolvido a partir do repositório disponibilizado pelo professor na Aula 1 e concentrado no repositório de Cler Andrade. O modelo de colaboração adotado foi o mesmo do Relatório 11: forks, branches locais e Pull Requests revisitados por quem não escreveu o código. A Tabela 1 identifica os repositórios e os papéis de cada participante.
+O Projeto Integrador foi desenvolvido a partir do repositório disponibilizado pelo professor na Aula 1 e concentrado no repositório de Cler Andrade. O modelo de colaboração adotado foi o mesmo do Relatório 11: forks, branches locais e Pull Requests revisados por quem não escreveu o código. A Tabela 1 identifica os repositórios e os papéis de cada participante neste relatório.
 
 | Papel | Estudante | Repositório | Observação |
 |---|---|---|---|
 | Origem | Juliano Rodrigo Lamb | github.com/julianolamb/gqs-cadastro-pessoas | ponto de partida da disciplina |
-| B | Cler Andrade (ClerAndrade) | github.com/ClerAndrade/gqs-cadatro-pessoas | repositório principal deste relatório |
-| A | Luis Felipe Machado Dutra (So1d) | github.com/So1d/gqs-cadatro-pessoas | fork de B |
+| A | Cler Andrade (ClerAndrade) | github.com/ClerAndrade/gqs-cadatro-pessoas | repositório principal deste relatório |
+| B | Luis Felipe Machado Dutra (So1d) | github.com/So1d/gqs-cadatro-pessoas | fork de A |
 
 Tabela 1: Repositórios envolvidos no Projeto Integrador.
 
@@ -29,7 +29,7 @@ O código entregue na Aula 1 já continha `Pessoa`, `CadastroPessoas` e a interf
 | `tests/` | verificações automatizadas com PyTest |
 | `infra/compose.yaml` | principal e réplica MySQL 8.4.13 |
 | `infra/README.md` | instruções de subida, criação da tabela e conexão |
-| `documentos/` | checklists, métricas, rastreabilidade e relatórios |
+| `documentos/` | checklists, métricas, rastreabilidade, evidências e relatórios |
 
 Tabela 2: Arquivos do Projeto Integrador e suas responsabilidades.
 
@@ -52,6 +52,8 @@ A Aula 6 registrou uma inspeção com checklist e a Aula 4 introduziu RADON. O m
 | Testes | 23 | 27 | saída de `pytest -q` |
 
 Tabela 3: Comparação das métricas antes e depois das correções.
+
+A folha original de inspeção da Aula 2, com os nomes CLER, GUILHERME D., GABRIELA e LUIS, foi preservada em `documentos/evidencias/inspeção-aula2.pdf`. Os resultados do checklist preenchido estão em `documentos/checklist-inspecao-preenchido-aula6.md`.
 
 2.3 Padronização e prevenção de defeitos
 
@@ -83,19 +85,19 @@ Quadro 1. Saída das verificações automatizadas na revisão final.
 
 3.1 Contrato e implementação MySQL
 
-A Aula 11 introduziu a separação entre regras de negócio e armazenamento. O contrato `RepositorioPessoas` define `listar()`, `buscar_por_id()`, `adicionar()`, `alterar()` e `excluir()`. A implementação em memória continua sendo o padrão do menu; a implementação MySQL é ativada por `CADASTRO_REPOSITORIO=mysql`. A Tabela 4 lista as variáveis lidas por `repositorio_pessoas_mysql.py`.
+A Aula 11 introduziu a separação entre regras de negócio e armazenamento. O contrato `RepositorioPessoas` define `cadastrar()`, `buscar()`, `listar()` e `alterar()`. A implementação em memória continua sendo o padrão do menu; a implementação MySQL é ativada por `CADASTRO_REPOSITORIO=mysql`. A Tabela 4 lista as variáveis lidas por `repositorio_pessoas_mysql.py`.
 
-| Variável | Uso | Valor padrão |
+| Variável | Uso | Valor |
 |---|---|---|
 | `DB_HOST` | host do MySQL | `localhost` |
 | `DB_PORT` | porta mapeada no compose | `3307` |
 | `DB_USER` | usuário | `root` |
-| `DB_PASSWORD` | senha do compose didático | `root_lab_2026` |
+| `DB_PASSWORD` | senha lida do ambiente local | definida em `.env`, nunca versionada |
 | `DB_NAME` | banco | `cadastro` |
 
 Tabela 4: Configuração da conexão MySQL.
 
-A consulta de paginação usa `SELECT SQL_CALC_FOUND_ROWS`, seguida de `SELECT FOUND_ROWS()`, para manter a contagem total sem varrer novamente a tabela. As demais operações usam parâmetros (`%s`) em vez de concatenação de strings. A confirmação é feita com `conn.commit()` após cada escrita e `conn.rollback()` em caso de falha; `conn.close()` é chamado em `finally`. Esses pontos foram revisados no Pull Request #3, originado da contribuição de A.
+A paginação usa `LIMIT` e `OFFSET` com uma contagem separada por `COUNT(*)`, sem recurso de contagem embutido na consulta principal. As demais operações usam parâmetros (`%s`) em vez de concatenação de strings. A confirmação é feita com `conn.commit()` após cada escrita e `conn.rollback()` em caso de falha; `conn.close()` é chamado em `finally`. Esses pontos foram revisados no Pull Request #3, originado da contribuição de B para A.
 
 3.2 Docker Compose
 
@@ -106,16 +108,18 @@ O arquivo `infra/compose.yaml` define um servidor principal e uma réplica MySQL
 | Imagem | `mysql:8.4.13` |
 | Serviço principal | porta `3307` no host, `3306` no contêiner |
 | Serviço réplica | porta `3308` no host, `3306` no contêiner |
-| Volumes | `db_data` e `db_replica_data`, nomeados |
-| Rede | `gqs_net`, bridge |
-| Variáveis de ambiente | `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE` |
-| Comando da réplica | `CHANGE_REPLICATION_SOURCE_TO` com `SOURCE_LOG_FILE=mysql-bin.000001`, `SOURCE_LOG_POS=4`, `GET_SOURCE_PUBLIC_KEY=1` |
-| Parâmetros do principal | `--log-bin=mysql-bin`, `--server-id=1`, `--binlog_row_image=FULL` |
-| Parâmetros da réplica | `--log-bin=mysql-bin`, `--server-id=2`, `--relay-log=relay-bin`, `--log-replica-updates=ON`, `--skip-replica-start=OFF` |
+| Volumes | `principal-data` e `replica-data`, nomeados |
+| Rede | rede bridge padrão do Compose |
+| Variáveis de ambiente | `MYSQL_ROOT_PASSWORD` obrigatória via ambiente, `MYSQL_DATABASE` |
+| Comando da réplica | `CHANGE REPLICATION SOURCE TO` com `SOURCE_AUTO_POSITION=1` e `GET_SOURCE_PUBLIC_KEY=1` |
+| Parâmetros do principal | `--log-bin=mysql-bin`, `--server-id=1`, `--gtid-mode=ON` |
+| Parâmetros da réplica | `--relay-log=relay-bin`, `--server-id=2`, `--log-replica-updates=ON` |
 
 Tabela 5: Configuração dos contêineres MySQL.
 
-A validação local foi feita com `docker compose config --quiet`, que encerrou com código 0. O daemon do Docker não estava disponível nesta máquina (`docker info` falhou ao conectar em `npipe:////./pipe/dockerDesktopLinuxEngine`), por isso a execução ponta a ponta não foi repetida aqui. A execução com MySQL real foi feita por A em ambiente Linux com Podman e está registrada no Relatório 11. Neste repositório, o DAO foi verificado com um conector falso em `tests/test_repositorio_mysql.py`, que cobre paginação, mapeamento de linhas e o uso de `commit()` e `rollback()`.
+A senha do banco não aparece mais no arquivo versionado: o compose exige `MYSQL_ROOT_PASSWORD` no ambiente e `infra/.env.example` serve apenas de modelo. A validação local foi feita com `docker compose config --quiet`, que encerrou com código 0. O daemon do Docker não estava disponível nesta máquina (`docker info` falhou ao conectar em `npipe:////./pipe/dockerDesktopLinuxEngine`), por isso a execução ponta a ponta não foi repetida aqui. A execução com MySQL real foi feita em ambiente Linux com Podman e está registrada no Relatório 11. Neste repositório, o DAO foi verificado com um conector falso em `tests/test_repositorio_mysql.py`, que cobre paginação, mapeamento de linhas e o uso de `commit()` e `rollback()`.
+
+A conferência no canal de replicação foi feita com o comando `SHOW REPLICA STATUS\G`, que apresenta `Replica_IO_Running`, `Replica_SQL_Running` e a posição do relay log. A Figura 6 registra essa verificação.
 
 3.3 Verificação da migração
 
@@ -127,14 +131,20 @@ A colaboração foi registrada em quatro Pull Requests. A Tabela 6 apresenta a d
 
 | PR | Direção | Título | Autor | Resultado |
 |---|---|---|---|---|
-| #1 | B → A | Padronização com Pylint e onboarding | Cler Andrade | mesclado |
-| #2 | B → A | Refatoração RADON e infraestrutura de qualidade | Cler Andrade | mesclado |
-| #3 | A → B | DAO MySQL e testes automatizados | Luis Felipe Machado Dutra | mesclado em `e289160` |
-| #1 (A) | A → B | Retorno da evolução do cadastro | Luis Felipe Machado Dutra | revisado e incorporado via #3 |
+| #1 | A → B | Padronização com Pylint e onboarding | Cler Andrade | mesclado |
+| #2 | A → B | Refatoração RADON e infraestrutura de qualidade | Cler Andrade | mesclado |
+| #3 | B → A | DAO MySQL e testes automatizados | Luis Felipe Machado Dutra | mesclado em `e289160` |
+| #1 (B) | B → A | Retorno da evolução do cadastro | Luis Felipe Machado Dutra | revisado e incorporado via #3 |
 
 Tabela 6: Pull Requests da atividade.
 
-Os pontos revisados em #3 foram a ausência de delegação em `alterar()`, o uso direto de `mysql.connector` no programa principal e a falta de fechamento de cursor e conexão. A versão mesclada usa o contrato, a variável de ambiente e o fechamento em `finally`. Os commits de consolidação deste repositório estão na Tabela 7.
+Os pontos revisados em #3 foram a ausência de delegação em `alterar()`, o uso direto de `mysql.connector` no programa principal e a falta de fechamento de cursor e conexão. A versão mesclada usa o contrato, a variável de ambiente e o fechamento em `finally`.
+
+```
+ Os commits de consolidação deste repositório estão na Tabela 7.
+```
+
+Os commits de consolidação deste repositório estão na Tabela 7.
 
 | Commit | Data | Mensagem |
 |---|---|---|
@@ -149,7 +159,7 @@ Os pontos revisados em #3 foram a ausência de delegação em `alterar()`, o uso
 | `99d1cd5` | 20/11 | chore: mapeia identidade do laboratorio para Cler Andrade |
 | `d9f037c` | 21/11 | docs: adiciona capa UTFPR e reescreve relatorio como diario |
 
-Tabela 7: Commits de consolidação no repositório de B.
+Tabela 7: Commits de consolidação no repositório de A.
 
 5 Autoria e rastreabilidade
 
@@ -179,8 +189,41 @@ Quadro 2: Trecho de `git log --use-mailmap --oneline`.
 
 O enunciado final também pedia um commit próprio por semana letiva, com mínimo de 17 semanas. O histórico deste repositório começa em 14/10 e os commits anteriores pertencem ao professor. Não foi inventada data antiga nem criado commit vazio para completar o quadro; a limitação está registrada em `documentos/plano-semanal.md` e `documentos/rastreabilidade.md`. Fora esse ponto, a `main` está sincronizada com o GitHub e o último `git status --short --branch` retornou apenas `## main...origin/main`.
 
-6 Considerações finais
+6 Evidências de execução
+
+As capturas a seguir foram extraídas do Relatório 11 entregue na disciplina e copiadas sem alteração para `documentos/evidencias/`. Elas registram a execução com MySQL em ambiente Linux com Podman, conforme relatado pelo colega, e complementam os testes automatizados executados neste repositório.
+
+![Cadastro de pessoa](evidencias/figura-cadastro.png)
+
+Figura 2. Inclusão de pessoa pelo menu de comandos.
+
+![Alteração de pessoa](evidencias/figura-alteracao.png)
+
+Figura 3. Alteração de uma pessoa já cadastrada.
+
+![Listagem de pessoas](evidencias/figura-listagem.png)
+
+Figura 4. Listagem após as operações de escrita.
+
+![Persistência no MySQL](evidencias/figura-persistencia.png)
+
+Figura 5. Consulta das linhas gravadas no banco MySQL.
+
+![Verificação da réplica](evidencias/figura-replica.png)
+
+Figura 6. Conferência da replicação com `SHOW REPLICA STATUS\G`.
+
+![Histórico do Git no repositório A](evidencias/figura-git-log-a.png)
+
+Figura 7. Histórico de commits e merges no repositório de A.
+
+![Histórico do Git no repositório B](evidencias/figura-git-log-b.png)
+
+Figura 8. Recorte do histórico no repositório de B, com a integração da contribuição.
+
+7 Considerações finais
 
 A evolução do Cadastro de Pessoas deixou o projeto mais próximo do que foi pedido nas Aulas 1 a 12. O contrato de repositório permitiu trocar memória por MySQL sem mexer nas regras de negócio; as métricas e o Pylint identificaram pontos que passaram por refatoração; o pre-commit e o PyTest deram uma forma repetível de verificar o código antes do commit. A colaboração por fork e Pull Request ficou registrada nos quatro PRs e no merge de `e289160`.
 
 Dois pontos ficaram como ressalva explícita: a execução do MySQL com Docker não foi repetida nesta máquina por indisponibilidade do daemon, e o requisito das 17 semanas não foi preenchido retroativamente. Ambos estão documentados, sem tentativa de mascarar a ausência com histórico fabricado. O relatório do colega (Relatório 11) permanece como evidência da execução com banco real e da colaboração em sentido inverso.
+

@@ -3,6 +3,5 @@
 __pycache__/
 *.pyc
 .pytest_cache/
-
 # Configuracao local com senhas do banco
 .env
