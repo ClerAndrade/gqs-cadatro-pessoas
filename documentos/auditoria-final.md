@@ -20,7 +20,7 @@ Conferência feita em 25/11/2026. Foram comparados o enunciado final do Projeto 
 | Documentação técnica | README, CONTRIBUTING, checklists, métricas, rastreabilidade e relatório | OK |
 | Rastreabilidade (GCS) | `documentos/rastreabilidade.md`, PRs, commits e tag `v1.0.0-entrega` | OK |
 | Autoria identificável | `.mailmap` com 5 commits `L16-M01` mapeados para Cler Andrade | OK, com ressalva histórica |
-| 1 commit próprio por semana letiva (17) | histórico original sem distribuição semanal; reconstrução em 25/11 | Reconstruído, não original |
+| 1 commit próprio por semana letiva (17) | histórico original sem distribuição semanal; índice complementar em 25/11 | Não atendido no passado; não fabricado |
 | Relatório técnico em PDF | `documentos/relatorio-tecnico.pdf`, capa UTFPR e 8 figuras | OK |
 | Selenium | fora do escopo conforme item 9 do enunciado | Não incluído |
 
@@ -28,7 +28,7 @@ Conferência feita em 25/11/2026. Foram comparados o enunciado final do Projeto 
 
 O histórico original não possui um commit próprio em cada uma das 17 semanas letivas. Os primeiros commits de Cler Andrade no repositório aparecem em 14/10; antes disso há apenas commits do professor. Alterar datas para preencher o quadro seria fabricar histórico.
 
-Como o item 5 do enunciado prevê a reconstrução quando a evolução não pode ser demonstrada, foram criados 17 registros reais em `documentos/semanas/`, um por semana, cada um com commit próprio e mensagem padronizada. Todos foram feitos em 25/11/2026 e estão identificados como reconstrução. Isso não apaga a ausência original, mas torna a trilha de cada prática verificável sem inventar passado.
+Foram criados 17 registros em `documentos/semanas/`, um por semana letiva, cada um com commit próprio e mensagem padronizada. Eles são um índice complementar de rastreabilidade, feito em 25/11/2026, que associa cada prática a evidências já existentes. Não são apresentados como cumprimento do mínimo de um commit por semana e não apagam a ausência original.
 
 ## Conferência dos slides
 

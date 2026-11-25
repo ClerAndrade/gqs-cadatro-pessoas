@@ -1,6 +1,6 @@
 # Semana 10 — Baseline e indicadores
 
-Este registro foi reconstruído em 25/11/2026 a partir de evidências já existentes no repositório. As datas dos commits originais não foram alteradas; este arquivo apenas torna explícita a etapa correspondente do semestre.
+Este arquivo é um índice complementar de rastreabilidade, elaborado em 25/11/2026 a partir de evidências já existentes. Não afirma que a atividade ocorreu nesta data, não substitui commits das semanas originais e não é apresentado como cumprimento do requisito quantitativo.
 
 ## Atividade
 

@@ -14,7 +14,7 @@ Neste relatório, A = `ClerAndrade` e B = `So1d`, conforme o slide 57 e o títul
 | Padronização e qualidade | `5794cc2`, `b50847c`, `2441169` | `ClerAndrade` |
 | Testes ampliados | `73e525c`, `ab1ce09` | `ClerAndrade` |
 | Documentação e relatório | commits `docs: ...` a partir de `3b80a72` | `ClerAndrade` |
-| Reconstrução das 17 semanas | `documentos/semanas/semana-01.md` a `semana-17.md` | `ClerAndrade`, em 25/11/2026 |
+| Índice complementar das 17 semanas | `documentos/semanas/semana-01.md` a `semana-17.md` | `ClerAndrade`, em 25/11/2026 |
 
 ## O problema de identidade `L16-M01`
 
@@ -35,7 +35,7 @@ O histórico mapeado contém 69 commits: 48 de Cler Andrade, 19 de Juliano Rodri
 
 O histórico original não tem um commit próprio por semana letiva desde o início da disciplina. As semanas iniciais contêm apenas commits do professor e os primeiros registros de Cler Andrade aparecem em 14/10. Não foram criados commits com data retroativa.
 
-Para atender ao item 5 do enunciado sem fabricar passado, cada etapa foi reconstruída em 25/11/2026 em `documentos/semanas/`, com um commit próprio por semana. Esses registros são explícitos sobre a data da reconstrução e não substituem os objetos originais.
+Cada etapa foi organizada em 25/11/2026 em `documentos/semanas/`, com um commit próprio por semana. Esses arquivos são um índice complementar de rastreabilidade: não substituem os objetos originais, não simulam atividades feitas em cada semana letiva e não são apresentados como cumprimento retroativo do requisito quantitativo.
 
 ## Links dos Pull Requests
 

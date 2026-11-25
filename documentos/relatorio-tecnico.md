@@ -146,7 +146,7 @@ Os três experimentos complementares da Aula 12 — atraso de replicação, rép
 
 5 Evidências de execução
 
-As figuras a seguir registram a execução compartilhada do grupo e a integração no repositório. As sete capturas de tela vêm do Relatório 11; a Figura 1 foi elaborada para este relatório.
+As figuras a seguir registram a execução compartilhada do grupo e a integração no repositório. As sete capturas de tela vêm do Relatório 11; a Figura 1 foi elaborada para este relatório. Essas imagens documentam o comportamento esperado do sistema com MySQL, mas não são apresentadas como prova de execução individual de A. A autoria de A é comprovada pelos commits, branches e Pull Requests da Seção 6; a execução local neste repositório foi verificada com os testes automatizados do Quadro 1.
 
 ![Arquitetura do Cadastro de Pessoas](figura-arquitetura.svg)
 
@@ -232,11 +232,13 @@ ab1ce09 test: adiciona testes da entidade Pessoa
 
 Quadro 2: Trecho de `git log --use-mailmap --oneline`.
 
-7 Diário das 17 semanas e reconstrução documentada
+7 Diário de desenvolvimento e índice de rastreabilidade
 
-O enunciado final exige um commit próprio em cada uma das 17 semanas letivas. O histórico original não atende a esse requisito: há vários commits de Cler Andrade na mesma semana e as semanas iniciais contêm apenas commits do professor. Não foi possível voltar no tempo nem é aceitável alterar datas de commits já publicados. O item 5 do enunciado permite, porém, reconstruir o projeto quando o histórico não demonstra adequadamente a evolução. Foi essa a saída adotada: em 25/11/2026, cada etapa foi registrada em um arquivo real, com um commit próprio e mensagem padronizada. Os 17 arquivos estão em `documentos/semanas/`. Eles são uma reconstrução explícita, não uma simulação de trabalho feito em data anterior.
+O enunciado final pede um commit próprio em cada uma das 17 semanas letivas. O histórico original deste repositório não permite demonstrar essa distribuição: há vários commits de Cler Andrade concentrados em poucas datas e as semanas iniciais contêm apenas commits do professor. Este relatório não afirma que o requisito quantitativo foi cumprido e não apresenta a sequência abaixo como substituto retroativo de commits não feitos.
 
-| Semana | Prática registrada | Evidência original | Commit de reconstrução |
+O que se apresenta é um índice complementar de rastreabilidade. Em 25/11/2026, cada prática já evidenciada no repositório foi associada a um arquivo em `documentos/semanas/`, com mensagem de commit padronizada. Os arquivos apenas organizam evidências existentes — checklists, métricas, testes, infraestrutura e Pull Requests — para que a trajetória possa ser seguida sem depender da memória de quem executou. Eles não simulam atividades feitas em datas anteriores.
+
+| Semana | Prática registrada | Evidência original | Registro complementar |
 |---|---|---|---|
 | 1 | Repositório-base e quality policy da Aula 1 | commits iniciais do professor e `README.md` | `docs: registra semana 01 - ponto de partida da aula 1` |
 | 2 | Inspeção com checklist | `documentos/auditoria-aula2.md` e folha da Aula 2 | `docs: registra semana 02 - inspecao de codigo` |
@@ -256,18 +258,12 @@ O enunciado final exige um commit próprio em cada uma das 17 semanas letivas. O
 | 16 | Relatório e capa UTFPR | commits `d9f037c` a `7b56902` | `docs: registra semana 16 - relatorio tecnico e capa utfpr` |
 | 17 | Consolidação da entrega | tag `v1.0.0-entrega` e este relatório | `docs: registra semana 17 - consolidacao da entrega final` |
 
-Tabela 8: Reconstrução semanal com base nas evidências existentes.
+Tabela 8: Índice complementar de rastreabilidade montado a partir de evidências existentes.
 
-Essa reconstrução não apaga a limitação original: as datas dos 17 commits de registro são de 25/11/2026 e não representam atividades feitas em cada semana letiva. O que ela garante é que a trilha de cada prática esteja identificável, verificável e ligada a um commit próprio, sem fabricar datas ou autoria.
+Os arquivos foram criados em 25/11/2026 e não representam atividades feitas em cada semana letiva. Eles funcionam como um índice verificável das práticas já registradas no repositório; não substituem commits das semanas originais e não são apresentados como cumprimento do mínimo de um commit por semana.
 
 8 Considerações finais
 
 O projeto entregue mantém a evolução das Aulas 1 a 12 em um único repositório: funções e classes, contrato de repositório, RADON, Pylint, pre-commit, PyTest, fork e Pull Request, DAO com MySQL, Compose com principal e réplica e documentação técnica. A verificação final registrada foi de 27 testes aprovados, Pylint 10,00/10, RADON com média A(1,7959) e `docker compose config --quiet` com código 0.
 
-Três ressalvas permanecem explícitas: a execução dos contêineres não foi repetida nesta máquina por falha do daemon Docker; os experimentos de atraso e falha de réplica/principal não foram executados; e a distribuição original de um commit por semana letiva não existe no histórico real, tendo sido tratada pela reconstrução documentada da Seção 7. Nada disso foi mascarado com histórico, data ou autoria fabricados.
-
-**Link do repositório GitHub:** [ClerAndrade/gqs-cadatro-pessoas](https://github.com/ClerAndrade/gqs-cadatro-pessoas)
-
-**Link deste PDF:** [documentos/relatorio-tecnico.pdf](https://github.com/ClerAndrade/gqs-cadatro-pessoas/blob/main/documentos/relatorio-tecnico.pdf)
-
-Para reproduzir o trabalho, comece pela Seção 2, prepare o ambiente com os comandos indicados e execute as verificações do Quadro 1. A Seção 3 registra o que foi feito, a Seção 4 explica a persistência e a infraestrutura, a Seção 6 mostra como a autoria e a colaboração podem ser conferidas no GitHub e a Seção 7 apresenta a reconstrução das 17 semanas.
+Três ressalvas permanecem explícitas: a execução dos contêineres não foi repetida nesta máquina por falha do daemon Docker; os experimentos de atraso e falha de réplica/principal não foram executados; e a distribuição original de um commit por semana letiva não existe no histórico real, tendo sido apenas organizada como índice complementar na Seção 7. Nada disso foi mascarado com histórico, data ou autoria fabricados.

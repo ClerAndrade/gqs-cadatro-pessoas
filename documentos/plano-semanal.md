@@ -2,9 +2,9 @@
 
 O projeto-base foi publicado pelo professor entre 02/09 e 06/10. Os primeiros commits de Cler Andrade neste repositório aparecem em 14/10. Portanto, o histórico original não possui um commit próprio em cada uma das 17 semanas letivas exigidas pelo item 10 do enunciado final.
 
-Criar commits com data antiga para preencher o quadro seria fabricar histórico. A alternativa adotada foi a permitida pelo item 5: reconstruir as etapas agora, com registros reais, mensagens padronizadas e declaração clara da data da reconstrução.
+Criar commits com data antiga para preencher o quadro seria fabricar histórico. O que foi feito, portanto, foi organizar em 25/11/2026 um índice complementar de rastreabilidade: 17 arquivos reais, com mensagens padronizadas e declaração clara da data. O índice não é apresentado como cumprimento do requisito quantitativo.
 
-| Semana | Etapa reconstruída | Arquivo | Tipo de commit |
+| Semana | Etapa organizada | Arquivo | Tipo de commit |
 |---|---|---|---|
 | 1 | Repositório-base da Aula 1 | `semanas/semana-01.md` | `docs` |
 | 2 | Inspeção de código | `semanas/semana-02.md` | `docs` |
