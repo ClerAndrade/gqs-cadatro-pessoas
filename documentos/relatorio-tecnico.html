@@ -11,7 +11,8 @@ body { font-family: Aptos, Calibri, sans-serif; font-size: 10.5pt; color: #222; 
 .capa .titulo { font-size: 19pt; font-weight: bold; line-height: 1.3; margin: 0 auto 6mm; max-width: 150mm; }
 .capa .subtitulo { font-size: 12.5pt; line-height: 1.4; margin: 0 auto 30mm; max-width: 145mm; }
 .capa .autor { font-size: 13pt; font-weight: bold; margin: 0 0 22mm; }
-.capa .prof { font-size: 10.5pt; line-height: 1.5; margin: 0 0 30mm; }
+.capa .prof { font-size: 10.5pt; line-height: 1.5; margin: 0 0 18mm; }
+.capa .link { font-size: 10.5pt; margin: 0 0 18mm; word-wrap: break-word; }
 .capa .local { font-size: 11pt; margin: 0; }
 .conteudo h2 { color: #174a6e; font-size: 14pt; margin-top: 18pt; margin-bottom: 6pt; }
 .conteudo h3 { color: #333; font-size: 11.5pt; margin-top: 12pt; }
@@ -33,6 +34,7 @@ body { font-family: Aptos, Calibri, sans-serif; font-size: 10.5pt; color: #222; 
   <p class="subtitulo">Evolução do Cadastro de Pessoas e consolidação das práticas de qualidade</p>
   <p class="autor">Aluno: Cler Andrade (RA 2769816)</p>
   <p class="prof">Projeto Integrador da disciplina Gestão da Qualidade de Software<br/>Professor: Juliano Rodrigo Lamb</p>
+  <p class="link">Repositório do projeto:<br/><a href="https://github.com/ClerAndrade/gqs-cadatro-pessoas">https://github.com/ClerAndrade/gqs-cadatro-pessoas</a></p>
   <p class="local">Referência: Aulas 1 a 12 · Entrega: 25 de novembro de 2026<br/>Medianeira, novembro de 2026</p>
 </section>
 <section class="conteudo"><p>1 Repositório, participantes e papéis</p>
@@ -68,6 +70,7 @@ body { font-family: Aptos, Calibri, sans-serif; font-size: 10.5pt; color: #222; 
 </tbody>
 </table>
 <p>Tabela 1: Repositórios envolvidos no Projeto Integrador.</p>
+<p>Este documento está organizado para responder três perguntas. O que foi feito aparece na Seção 3 e no diário da Seção 7. Como foi feito está nas Seções 2, 4 e 6, com comandos, configurações e referências a commits e Pull Requests. Como outra pessoa pode reproduzir está na Seção 2 e nos arquivos citados ao longo do texto.</p>
 <p>As contribuições circularam nos dois sentidos. A separação do armazenamento saiu de B para A pelo Pull Request #2; a persistência em MySQL saiu de A para B pelo Pull Request #1 do repositório de B e voltou a A pelo Pull Request #3, <code>Contribute Final</code>. O Pull Request #1 de A reuniu os testes automatizados da Aula 9. A Seção 6 detalha cada integração.</p>
 <p>2 Como preparar e verificar o projeto</p>
 <p>Esta seção funciona como guia prático. Os comandos abaixo foram executados no ambiente Windows do laboratório, com PowerShell na raiz do repositório.</p>
@@ -561,5 +564,6 @@ ab1ce09 test: adiciona testes da entidade Pessoa
 <p>8 Considerações finais</p>
 <p>O projeto entregue mantém a evolução das Aulas 1 a 12 em um único repositório: funções e classes, contrato de repositório, RADON, Pylint, pre-commit, PyTest, fork e Pull Request, DAO com MySQL, Compose com principal e réplica e documentação técnica. A verificação final registrada foi de 27 testes aprovados, Pylint 10,00/10, RADON com média A(1,7959) e <code>docker compose config --quiet</code> com código 0.</p>
 <p>Três ressalvas permanecem explícitas: a execução dos contêineres não foi repetida nesta máquina por falha do daemon Docker; os experimentos de atraso e falha de réplica/principal não foram executados; e a distribuição original de um commit por semana letiva não existe no histórico real, tendo sido tratada pela reconstrução documentada da Seção 7. Nada disso foi mascarado com histórico, data ou autoria fabricados.</p>
-<p>Repositório: https://github.com/ClerAndrade/gqs-cadatro-pessoas
-PDF final: https://github.com/ClerAndrade/gqs-cadatro-pessoas/blob/main/documentos/relatorio-tecnico.pdf</p></section></body></html>
+<p><strong>Link do repositório GitHub:</strong> <a href="https://github.com/ClerAndrade/gqs-cadatro-pessoas">ClerAndrade/gqs-cadatro-pessoas</a></p>
+<p><strong>Link deste PDF:</strong> <a href="https://github.com/ClerAndrade/gqs-cadatro-pessoas/blob/main/documentos/relatorio-tecnico.pdf">documentos/relatorio-tecnico.pdf</a></p>
+<p>Para reproduzir o trabalho, comece pela Seção 2, prepare o ambiente com os comandos indicados e execute as verificações do Quadro 1. A Seção 3 registra o que foi feito, a Seção 4 explica a persistência e a infraestrutura, a Seção 6 mostra como a autoria e a colaboração podem ser conferidas no GitHub e a Seção 7 apresenta a reconstrução das 17 semanas.</p></section></body></html>

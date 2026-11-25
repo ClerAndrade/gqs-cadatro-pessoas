@@ -10,6 +10,8 @@ O Projeto Integrador foi conduzido no repositório de Cler Andrade, a partir do 
 
 Tabela 1: Repositórios envolvidos no Projeto Integrador.
 
+Este documento está organizado para responder três perguntas. O que foi feito aparece na Seção 3 e no diário da Seção 7. Como foi feito está nas Seções 2, 4 e 6, com comandos, configurações e referências a commits e Pull Requests. Como outra pessoa pode reproduzir está na Seção 2 e nos arquivos citados ao longo do texto.
+
 As contribuições circularam nos dois sentidos. A separação do armazenamento saiu de B para A pelo Pull Request #2; a persistência em MySQL saiu de A para B pelo Pull Request #1 do repositório de B e voltou a A pelo Pull Request #3, `Contribute Final`. O Pull Request #1 de A reuniu os testes automatizados da Aula 9. A Seção 6 detalha cada integração.
 
 2 Como preparar e verificar o projeto
@@ -264,5 +266,8 @@ O projeto entregue mantém a evolução das Aulas 1 a 12 em um único repositór
 
 Três ressalvas permanecem explícitas: a execução dos contêineres não foi repetida nesta máquina por falha do daemon Docker; os experimentos de atraso e falha de réplica/principal não foram executados; e a distribuição original de um commit por semana letiva não existe no histórico real, tendo sido tratada pela reconstrução documentada da Seção 7. Nada disso foi mascarado com histórico, data ou autoria fabricados.
 
-Repositório: https://github.com/ClerAndrade/gqs-cadatro-pessoas
-PDF final: https://github.com/ClerAndrade/gqs-cadatro-pessoas/blob/main/documentos/relatorio-tecnico.pdf
+**Link do repositório GitHub:** [ClerAndrade/gqs-cadatro-pessoas](https://github.com/ClerAndrade/gqs-cadatro-pessoas)
+
+**Link deste PDF:** [documentos/relatorio-tecnico.pdf](https://github.com/ClerAndrade/gqs-cadatro-pessoas/blob/main/documentos/relatorio-tecnico.pdf)
+
+Para reproduzir o trabalho, comece pela Seção 2, prepare o ambiente com os comandos indicados e execute as verificações do Quadro 1. A Seção 3 registra o que foi feito, a Seção 4 explica a persistência e a infraestrutura, a Seção 6 mostra como a autoria e a colaboração podem ser conferidas no GitHub e a Seção 7 apresenta a reconstrução das 17 semanas.
