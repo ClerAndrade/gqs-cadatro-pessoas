@@ -99,7 +99,7 @@ Tabela 3: Comparação das métricas antes e depois das correções.
 
 3.4 Orientação a objetos e testes automatizados
 
-A Aula 7 introduziu os cinco checkpoints de orientação a objetos, registrados em `documentos/checkpoints-aula7.md`. O contrato `RepositorioPessoas` usa `ABC` e `@abstractmethod` e define apenas `cadastrar()`, `buscar()`, `listar()` e `alterar()`. Não existem `buscar_por_id`, `adicionar` ou `excluir` neste contrato; o relatório anterior mencionava esses nomes por engano.
+A Aula 7 introduziu os cinco checkpoints de orientação a objetos, registrados em `documentos/checkpoints-aula7.md`. O contrato `RepositorioPessoas` usa `ABC` e `@abstractmethod` e define apenas `cadastrar()`, `buscar()`, `listar()` e `alterar()`. A implementação `RepositorioPessoasMemoria` é a padrão do menu; `RepositorioPessoasMySQL` pode substituí-la sem alterar as regras de negócio.
 
 Os casos CT-01 e CT-02 estão em `documentos/casos-teste-ct01-ct02.md`. A suíte final reúne 27 testes, incluindo `tests/test_pessoa.py`, os testes do cadastro e um DAO falso para verificar `commit()`, `rollback()`, mapeamento de linhas e fechamento de cursor e conexão sem depender de um servidor MySQL.
 

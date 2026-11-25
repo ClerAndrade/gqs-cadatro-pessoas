@@ -206,7 +206,7 @@ radon cc (somente leitura)...............................................Passed
 </table>
 <p>Tabela 3: Comparação das métricas antes e depois das correções.</p>
 <p>3.4 Orientação a objetos e testes automatizados</p>
-<p>A Aula 7 introduziu os cinco checkpoints de orientação a objetos, registrados em <code>documentos/checkpoints-aula7.md</code>. O contrato <code>RepositorioPessoas</code> usa <code>ABC</code> e <code>@abstractmethod</code> e define apenas <code>cadastrar()</code>, <code>buscar()</code>, <code>listar()</code> e <code>alterar()</code>. Não existem <code>buscar_por_id</code>, <code>adicionar</code> ou <code>excluir</code> neste contrato; o relatório anterior mencionava esses nomes por engano.</p>
+<p>A Aula 7 introduziu os cinco checkpoints de orientação a objetos, registrados em <code>documentos/checkpoints-aula7.md</code>. O contrato <code>RepositorioPessoas</code> usa <code>ABC</code> e <code>@abstractmethod</code> e define apenas <code>cadastrar()</code>, <code>buscar()</code>, <code>listar()</code> e <code>alterar()</code>. A implementação <code>RepositorioPessoasMemoria</code> é a padrão do menu; <code>RepositorioPessoasMySQL</code> pode substituí-la sem alterar as regras de negócio.</p>
 <p>Os casos CT-01 e CT-02 estão em <code>documentos/casos-teste-ct01-ct02.md</code>. A suíte final reúne 27 testes, incluindo <code>tests/test_pessoa.py</code>, os testes do cadastro e um DAO falso para verificar <code>commit()</code>, <code>rollback()</code>, mapeamento de linhas e fechamento de cursor e conexão sem depender de um servidor MySQL.</p>
 <p>4 Persistência e infraestrutura</p>
 <p>4.1 Contrato e DAO MySQL</p>
