@@ -52,7 +52,7 @@ Modo padrão, sem banco:
 python src\main.py
 ```
 
-Modo MySQL ( depois de subir o compose e criar a tabela conforme
+Modo MySQL (depois de subir o compose e criar a tabela conforme
 `infra/README.md`):
 
 ```powershell
@@ -77,8 +77,8 @@ python -m radon mi src
 python -m pre_commit run --all-files
 ```
 
-Estado atual: **23 testes passando**, **Pylint 10.00/10** e **RADON A**
-(média 1,80; nenhum bloco acima de A). Os números e o antes/depois estão em
+Estado atual: **27 testes passando**, **Pylint 10.00/10** e **RADON A**
+(média 1,7959; nenhum bloco acima de A). Os números e o antes/depois estão em
 `documentos/checklist-pylint.md` e `documentos/metricas-radon.md`.
 
 Na raiz também tem um `.venv` usado nos hooks do pre-commit. Os comandos acima
@@ -87,15 +87,19 @@ preparação.
 
 ## Colaboração
 
-- PR #1 — testes automatizados, integrado em 21/10/2026:
+Neste relatório, A = `ClerAndrade` e B = `So1d`, conforme o slide 57.
+
+- PR #1 de A — `Aula9/testes automatizados`, aberto e integrado por
+  `ClerAndrade` em 21/10/2026 (`b12760d`):
   https://github.com/ClerAndrade/gqs-cadatro-pessoas/pull/1
-- PR #2 — separação do armazenamento, feito pelo So1d e integrado em 04/11:
+- PR #2 de A — `refactor: GCS-01 separa armazenamento de pessoas`, enviado por
+  `So1d` e integrado em 04/11/2026 (`1c5f210`):
   https://github.com/ClerAndrade/gqs-cadatro-pessoas/pull/2
-- PR #1 no repositório do So1d — persistência MySQL, aberto por ClerAndrade e
-  integrado em 18/11: https://github.com/So1d/gqs-cadatro-pessoas/pull/1
-- PR #3 — contribuição final do So1d trazendo o MySQL para este repositório,
-  revisada e integrada em 19/11:
-  https://github.com/ClerAndrade/gqs-cadatro-pessoas/pull/3
+- PR #1 de B — `feat: implementa persistencia MySQL no cadastro`, enviado por
+  `ClerAndrade` e integrado em 18/11/2026 (`972061c`):
+  https://github.com/So1d/gqs-cadatro-pessoas/pull/1
+- PR #3 de A — `Contribute Final`, enviado por `So1d` e integrado em 19/11/2026
+  (`e289160`): https://github.com/ClerAndrade/gqs-cadatro-pessoas/pull/3
 
 Detalhes de autoria, incluindo o problema de identidade `L16-M01` na máquina do
 laboratório, estão em `documentos/rastreabilidade.md`.

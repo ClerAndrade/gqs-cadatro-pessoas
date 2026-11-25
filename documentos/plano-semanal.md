@@ -1,21 +1,27 @@
-# Plano de commits para as semanas restantes
+# Plano semanal e situação em 25/11/2026
 
-O histórico mostra que o projeto-base foi publicado pelo professor entre
-02/09 e 06/10. Meus primeiros commits aparecem em 14/10, já na máquina do
-laboratório. Não existe commit meu nas semanas anteriores e eu não vou criar
-commit com data antiga para preencher o quadro.
+O projeto-base foi publicado pelo professor entre 02/09 e 06/10. Os primeiros commits de Cler Andrade neste repositório aparecem em 14/10. Portanto, o histórico original não possui um commit próprio em cada uma das 17 semanas letivas exigidas pelo item 10 do enunciado final.
 
-A disciplina pede um commit próprio por semana letiva. Como isso não pode ser
-feito retroativamente sem fabricar histórico, o que dá para fazer é manter um
-commit real por semana de agora em diante. Sugestão para as semanas finais:
+Criar commits com data antiga para preencher o quadro seria fabricar histórico. A alternativa adotada foi a permitida pelo item 5: reconstruir as etapas agora, com registros reais, mensagens padronizadas e declaração clara da data da reconstrução.
 
-| Semana | Atividade real possível | Tipo de commit |
-| --- | --- | --- |
-| 13 | revisar PRs e ajustar documentação conforme feedback | `docs` / `fix` |
-| 14 | subir o compose, criar a tabela e rodar o app em modo MySQL | `test` / `fix` |
-| 15 | rodar RADON de novo após ajustes e registrar resultado | `docs` |
-| 16 | simular um defeito no alterar/cadastrar e corrigir com teste | `fix` / `test` |
-| 17 | conferir checklist final, PDF e push do repositório | `docs` / `chore` |
+| Semana | Etapa reconstruída | Arquivo | Tipo de commit |
+|---|---|---|---|
+| 1 | Repositório-base da Aula 1 | `semanas/semana-01.md` | `docs` |
+| 2 | Inspeção de código | `semanas/semana-02.md` | `docs` |
+| 3 | Modularização | `semanas/semana-03.md` | `docs` |
+| 4 | Métricas com RADON | `semanas/semana-04.md` | `docs` |
+| 5 | Refatoração guiada por métricas | `semanas/semana-05.md` | `docs` |
+| 6 | Análise estática com Pylint | `semanas/semana-06.md` | `docs` |
+| 7 | Checkpoints de orientação a objetos | `semanas/semana-07.md` | `docs` |
+| 8 | Casos de teste e entidade | `semanas/semana-08.md` | `docs` |
+| 9 | Testes automatizados e hooks | `semanas/semana-09.md` | `docs` |
+| 10 | Baseline e indicadores | `semanas/semana-10.md` | `docs` |
+| 11 | MySQL e Docker Compose | `semanas/semana-11.md` | `docs` |
+| 12 | DAO e replicação | `semanas/semana-12.md` | `docs` |
+| 13 | Colaboração por fork e Pull Request | `semanas/semana-13.md` | `docs` |
+| 14 | Auditoria e rastreabilidade | `semanas/semana-14.md` | `docs` |
+| 15 | Checklist e testes da entidade | `semanas/semana-15.md` | `docs` |
+| 16 | Relatório e capa UTFPR | `semanas/semana-16.md` | `docs` |
+| 17 | Consolidação da entrega final | `semanas/semana-17.md` | `docs` |
 
-Cada linha só vira commit quando a atividade realmente acontecer. este arquivo
-é plano, não evidência de execução.
+Cada linha corresponde a um commit real feito em 25/11/2026. Os arquivos não simulam que a atividade ocorreu naquela semana; eles apenas ligam a prática à evidência existente no repositório. A limitação original continua registrada em `auditoria-final.md` e `rastreabilidade.md`.
