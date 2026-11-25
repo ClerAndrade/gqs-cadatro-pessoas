@@ -1,16 +1,20 @@
 1 Repositório e participantes
 
-O Projeto Integrador foi desenvolvido a partir do repositório disponibilizado pelo professor na Aula 1 e concentrado no repositório de Cler Andrade. O modelo de colaboração adotado foi o mesmo do Relatório 11: forks, branches locais e Pull Requests revisados por quem não escreveu o código. A Tabela 1 identifica os repositórios e os papéis de cada participante neste relatório.
+O Projeto Integrador foi desenvolvido a partir do repositório disponibilizado pelo professor na Aula 1 e concentrado no repositório de Cler Andrade. O modelo de colaboração adotado foi o mesmo do Relatório 11: forks, branches locais e Pull Requests revisados por quem não escreveu o código. A Tabela 1 identifica os repositórios e os papéis de cada participante.
 
 | Papel | Estudante | Repositório | Observação |
 |---|---|---|---|
 | Origem | Juliano Rodrigo Lamb | github.com/julianolamb/gqs-cadastro-pessoas | ponto de partida da disciplina |
-| A | Cler Andrade (ClerAndrade) | github.com/ClerAndrade/gqs-cadatro-pessoas | repositório principal deste relatório |
-| B | Luis Felipe Machado Dutra (So1d) | github.com/So1d/gqs-cadatro-pessoas | fork de A |
+| A | Luis Felipe Machado Dutra (So1d) | github.com/So1d/gqs-cadatro-pessoas | fork de B, recebeu a persistência em MySQL |
+| B | Cler Andrade (ClerAndrade) | github.com/ClerAndrade/gqs-cadatro-pessoas | repositório principal deste relatório |
 
 Tabela 1: Repositórios envolvidos no Projeto Integrador.
 
-As contribuições entre A e B circularam nos dois sentidos, como no Relatório 11. A separação do armazenamento em memória, com a definição do contrato `RepositorioPessoas`, e a persistência em MySQL saíram de B para A. O retorno da implementação do DAO de A para B foi fechado pelo Pull Request #3 e incorporado à `main` em `e289160`. As quatro contribuições estão listadas na Seção 4.
+As contribuições entre A e B circularam nos dois sentidos, como no Relatório 11. A separação do armazenamento em memória, com a definição do contrato `RepositorioPessoas`, saiu de A para B pelo Pull Request #2. A persistência em MySQL saiu de B para A pelo Pull Request #1, cujo titulo foi:
+
+`feat: implementa persistencia MySQL no cadastro`
+
+O fechamento foi o Pull Request #3, `Contribute Final`, integrado por B em 19/11/2026. As quatro contribuições estão listadas na Seção 4.
 
 2 Evolução do Cadastro de Pessoas
 
@@ -22,8 +26,8 @@ O código entregue na Aula 1 já continha `Pessoa`, `CadastroPessoas` e a interf
 |---|---|
 | `src/pessoa.py` | entidade com validação de nome e e-mail |
 | `src/repositorio_pessoas.py` | contrato `RepositorioPessoas`, com `ABC` e `@abstractmethod` |
-| `src/repositorio_pessoas_memoria.py` | implementação em memória, padrão do menu |
-| `src/repositorio_pessoas_mysql.py` | implementação MySQL com `mysql-connector-python` |
+| `src/repositorio_pessoas_memoria.py` | implementação `RepositorioPessoasMemoria`, padrão do menu |
+| `src/repositorio_pessoas_mysql.py` | implementação `RepositorioPessoasMySQL` com `mysql-connector-python` |
 | `src/cadastro.py` | regras de negócio e delegação ao repositório |
 | `src/main.py` | menu de comandos e leitura da variável `CADASTRO_REPOSITORIO` |
 | `tests/` | verificações automatizadas com PyTest |
@@ -33,7 +37,7 @@ O código entregue na Aula 1 já continha `Pessoa`, `CadastroPessoas` e a interf
 
 Tabela 2: Arquivos do Projeto Integrador e suas responsabilidades.
 
-A Figura 1 resume a dependência entre os módulos. O ponto central é que `CadastroPessoas` conversa apenas com o contrato; trocar memória por MySQL não exige mudança nas regras de negócio.
+A Figura 1 resume a dependência entre os módulos. O ponto central é que `CadastroPessoas` conversa apenas com o contrato; trocar `RepositorioPessoasMemoria` por `RepositorioPessoasMySQL` não exige mudança nas regras de negócio.
 
 ![Arquitetura do Cadastro de Pessoas](figura-arquitetura.svg)
 
@@ -97,7 +101,7 @@ A Aula 11 introduziu a separação entre regras de negócio e armazenamento. O c
 
 Tabela 4: Configuração da conexão MySQL.
 
-A paginação usa `LIMIT` e `OFFSET` com uma contagem separada por `COUNT(*)`, sem recurso de contagem embutido na consulta principal. As demais operações usam parâmetros (`%s`) em vez de concatenação de strings. A confirmação é feita com `conn.commit()` após cada escrita e `conn.rollback()` em caso de falha; `conn.close()` é chamado em `finally`. Esses pontos foram revisados no Pull Request #3, originado da contribuição de B para A.
+A paginação usa `LIMIT` e `OFFSET` com uma contagem separada por `COUNT(*)`, sem recurso de contagem embutido na consulta principal. As demais operações usam parâmetros (`%s`) em vez de concatenação de strings. A confirmação é feita com `conn.commit()` após cada escrita e `conn.rollback()` em caso de falha; `conn.close()` é chamado em `finally`. Esses pontos foram revisados no Pull Request #1, originado da contribuição de B para A.
 
 3.2 Docker Compose
 
@@ -119,7 +123,7 @@ Tabela 5: Configuração dos contêineres MySQL.
 
 A senha do banco não aparece mais no arquivo versionado: o compose exige `MYSQL_ROOT_PASSWORD` no ambiente e `infra/.env.example` serve apenas de modelo. A validação local foi feita com `docker compose config --quiet`, que encerrou com código 0. O daemon do Docker não estava disponível nesta máquina (`docker info` falhou ao conectar em `npipe:////./pipe/dockerDesktopLinuxEngine`), por isso a execução ponta a ponta não foi repetida aqui. A execução com MySQL real foi feita em ambiente Linux com Podman e está registrada no Relatório 11. Neste repositório, o DAO foi verificado com um conector falso em `tests/test_repositorio_mysql.py`, que cobre paginação, mapeamento de linhas e o uso de `commit()` e `rollback()`.
 
-A conferência no canal de replicação foi feita com o comando `SHOW REPLICA STATUS\G`, que apresenta `Replica_IO_Running`, `Replica_SQL_Running` e a posição do relay log. A Figura 6 registra essa verificação.
+A conferência no canal de replicação foi feita com o comando `SHOW REPLICA STATUS\G`, que apresenta `Replica_IO_Running`, `Replica_SQL_Running` e a posição do relay log. A Figura 6 registra essa verificação. Os três experimentos complementares da Aula 12 — atraso de replicação, réplica fora do ar e principal fora do ar — têm registro previsto em `documentos/experimentos-confiabilidade.md`; nesta entrega eles são retomados apenas como ressalva na Seção 7.
 
 3.3 Verificação da migração
 
@@ -131,14 +135,14 @@ A colaboração foi registrada em quatro Pull Requests. A Tabela 6 apresenta a d
 
 | PR | Direção | Título | Autor | Resultado |
 |---|---|---|---|---|
-| #1 | A → B | Padronização com Pylint e onboarding | Cler Andrade | mesclado |
-| #2 | A → B | Refatoração RADON e infraestrutura de qualidade | Cler Andrade | mesclado |
-| #3 | B → A | DAO MySQL e testes automatizados | Luis Felipe Machado Dutra | mesclado em `e289160` |
-| #1 (B) | B → A | Retorno da evolução do cadastro | Luis Felipe Machado Dutra | revisado e incorporado via #3 |
+| #1 | B → A | `feat: implementa persistencia MySQL no cadastro` | Cler Andrade (B) | mesclado em `972061c` |
+| #2 | A → B | `refactor: GCS-01 separa armazenamento de pessoas` | Luis Felipe Machado Dutra (A) | mesclado em `9eb9aa4` |
+| #3 | A → B | `Contribute Final` | Luis Felipe Machado Dutra (A) | integrado em 19/11/2026 |
+| #1 (B) | B → A | branches `feature/repositorio-mysql` e `main` de B | Cler Andrade (B) | revisado por A e incorporado |
 
 Tabela 6: Pull Requests da atividade.
 
-Os pontos revisados em #3 foram a ausência de delegação em `alterar()`, o uso direto de `mysql.connector` no programa principal e a falta de fechamento de cursor e conexão. A versão mesclada usa o contrato, a variável de ambiente e o fechamento em `finally`.
+Os pontos revisados em #1 foram a ausência de delegação em `alterar()`, o uso direto de `mysql.connector` no programa principal e a falta de fechamento de cursor e conexão. A versão mesclada usa o contrato, a variável de ambiente e o fechamento em `finally`.
 
 ```
  Os commits de consolidação deste repositório estão na Tabela 7.
@@ -159,7 +163,7 @@ Os commits de consolidação deste repositório estão na Tabela 7.
 | `99d1cd5` | 20/11 | chore: mapeia identidade do laboratorio para Cler Andrade |
 | `d9f037c` | 21/11 | docs: adiciona capa UTFPR e reescreve relatorio como diario |
 
-Tabela 7: Commits de consolidação no repositório de A.
+Tabela 7: Commits de consolidação no repositório de B.
 
 5 Autoria e rastreabilidade
 
@@ -223,7 +227,7 @@ Figura 8. Recorte do histórico no repositório de B, com a integração da cont
 
 7 Considerações finais
 
-A evolução do Cadastro de Pessoas deixou o projeto mais próximo do que foi pedido nas Aulas 1 a 12. O contrato de repositório permitiu trocar memória por MySQL sem mexer nas regras de negócio; as métricas e o Pylint identificaram pontos que passaram por refatoração; o pre-commit e o PyTest deram uma forma repetível de verificar o código antes do commit. A colaboração por fork e Pull Request ficou registrada nos quatro PRs e no merge de `e289160`.
+A evolução do Cadastro de Pessoas deixou o projeto mais próximo do que foi pedido nas Aulas 1 a 12. O contrato de repositório permitiu trocar memória por MySQL sem mexer nas regras de negócio; as métricas e o Pylint identificaram pontos que passaram por refatoração; o pre-commit e o PyTest deram uma forma repetível de verificar o código antes do commit. A colaboração por fork e Pull Request ficou registrada nos quatro PRs, incluindo `Contribute Final`, e no merge de `972061c`.
 
-Dois pontos ficaram como ressalva explícita: a execução do MySQL com Docker não foi repetida nesta máquina por indisponibilidade do daemon, e o requisito das 17 semanas não foi preenchido retroativamente. Ambos estão documentados, sem tentativa de mascarar a ausência com histórico fabricado. O relatório do colega (Relatório 11) permanece como evidência da execução com banco real e da colaboração em sentido inverso.
+Dois pontos ficaram como ressalva explícita: a execução do MySQL com Docker não foi repetida nesta máquina por indisponibilidade do daemon, e o requisito das 17 semanas não foi preenchido retroativamente. Os experimentos de confiabilidade da Aula 12 também não foram repetidos aqui; seu registro está previsto em `documentos/experimentos-confiabilidade.md`. Ambos estão documentados, sem tentativa de mascarar a ausência com histórico fabricado. O relatório do colega (Relatório 11) permanece como evidência da execução com banco real e da colaboração em sentido inverso.
 
