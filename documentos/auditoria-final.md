@@ -20,7 +20,7 @@ Conferência feita em 25/11/2026. Foram comparados o enunciado final do Projeto 
 | Documentação técnica | README, CONTRIBUTING, checklists, métricas, rastreabilidade e relatório | OK |
 | Rastreabilidade (GCS) | `documentos/rastreabilidade.md`, PRs, commits e tag `v1.0.0-entrega` | OK |
 | Autoria identificável | `.mailmap` com 5 commits `L16-M01` mapeados para Cler Andrade | OK, com ressalva histórica |
-| 1 commit próprio por semana letiva (17) | histórico original sem distribuição semanal; índice complementar em 25/11 | Não atendido no passado; não fabricado |
+| 1 commit próprio por semana letiva (17) | histórico original sem distribuição semanal; índice documental em 25/11 | Não atendido no passado; não fabricado; dúvida a encaminhar ao professor (item 19) |
 | Relatório técnico em PDF | `documentos/relatorio-tecnico.pdf`, capa UTFPR e 8 figuras | OK |
 | Selenium | fora do escopo conforme item 9 do enunciado | Não incluído |
 
@@ -28,7 +28,7 @@ Conferência feita em 25/11/2026. Foram comparados o enunciado final do Projeto 
 
 O histórico original não possui um commit próprio em cada uma das 17 semanas letivas. Os primeiros commits de Cler Andrade no repositório aparecem em 14/10; antes disso há apenas commits do professor. Alterar datas para preencher o quadro seria fabricar histórico.
 
-Foram criados 17 registros em `documentos/semanas/`, um por semana letiva, cada um com commit próprio e mensagem padronizada. Eles são um índice complementar de rastreabilidade, feito em 25/11/2026, que associa cada prática a evidências já existentes. Não são apresentados como cumprimento do mínimo de um commit por semana e não apagam a ausência original.
+Foram criados 17 arquivos em `documentos/semanas/`, um por semana letiva, como índice documental feito em 25/11/2026. Eles associam cada prática a evidências já existentes, mas não são apresentados como commits das semanas originais nem como cumprimento do item 10. A dúvida sobre o requisito quantitativo deve ser encaminhada ao professor antes da entrega, conforme o item 19; até 25/11/2026 não havia resposta registrada.
 
 ## Conferência dos slides
 
@@ -52,4 +52,4 @@ Não foram executados nesta máquina: a subida dos contêineres com Docker e os 
 
 Neste relatório, A = `ClerAndrade` e B = `So1d`, conforme o slide 57 e o título `(A -> B)` do PR de persistência. O `.mailmap` mapeia `L16-M01 <l16-m01@laboratorio.local>` para `Cler Andrade <115158502+ClerAndrade@users.noreply.github.com>`, sem reescrever os objetos publicados.
 
-O histórico mapeado tem 69 commits: 48 de Cler Andrade, 19 de Juliano Rodrigo Lamb, 1 de Luis Felipe Machado Dutra e 1 de Luis Dutra. Os commits do professor continuam com o nome dele porque são o ponto de partida permitido; os do colega permanecem com a autoria original porque são evidência da colaboração.
+O histórico mapeado tem 72 commits: 51 de Cler Andrade, 19 do professor Juliano Rodrigo Lamb, 1 de Luis Felipe Machado Dutra e 1 de Luis Dutra. Os commits do professor continuam com o nome dele porque são o ponto de partida permitido; os do colega permanecem com a autoria original porque são evidência da colaboração.

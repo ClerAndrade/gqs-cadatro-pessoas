@@ -7,6 +7,8 @@ métricas de complexidade, Docker, MySQL e colaboração por Pull Request.
 
 Repositório: https://github.com/ClerAndrade/gqs-cadatro-pessoas
 
+O nome do remote contém `cadatro`: é a grafia real criada no GitHub, mantida para não quebrar os links dos Pull Requests.
+
 ## O que o programa faz
 
 É um menu de terminal com seis opções: cadastrar, consultar, alterar, listar,

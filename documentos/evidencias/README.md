@@ -4,4 +4,6 @@ As imagens `figura-cadastro.png`, `figura-alteracao.png`, `figura-listagem.png`,
 
 O arquivo `inspeção-aula2.pdf` é a folha original de inspeção da Aula 2, com os nomes CLER, GUILHERME D., GABRIELA e LUIS indicados no nome do arquivo.
 
-Nenhuma captura foi recriada ou alterada; apenas copiada para dentro do repositório para que o relatório final possa referenciá-la localmente.
+Nenhuma captura foi recriada; as sete originais foram apenas copiadas para dentro do repositório para que o relatório final possa referenciá-las localmente. A cópia `figura-replica-sanitizada.png` deriva de `figura-replica.png` com um único trecho mascarado: a senha do banco descartável do laboratório exibida na linha de comando. É essa cópia que aparece na Figura 6 do relatório; o arquivo original permanece intacto.
+
+As legendas do relatório final também corrigem trocas da versão anterior: a Figura 5 mostra o menu, sem consulta SQL; a Figura 6 reúne as consultas SQL e o `SHOW REPLICA STATUS\G`; e as Figuras 7 e 8 mostram, respectivamente, os históricos de B (`So1d`) e A (`ClerAndrade`).
