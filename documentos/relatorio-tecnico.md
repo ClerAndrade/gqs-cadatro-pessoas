@@ -216,7 +216,7 @@ Cinco commits gravados na máquina do laboratório apareciam como `L16-M01 <l16-
 git --no-pager log --format='%h | %aN <%aE> | %s'
 ```
 
-O histórico mapeado contém 49 commits: 28 de Cler Andrade, 19 de Juliano Rodrigo Lamb, 1 de Luis Felipe Machado Dutra e 1 de Luis Dutra. Os commits do professor são o ponto de partida permitido; os do colega permanecem com a autoria original porque são evidência da colaboração. A auditoria detalhada está em `documentos/auditoria-final.md` e `documentos/rastreabilidade.md`. A tag `v1.0.0-entrega` marca a versão final.
+O histórico mapeado contém 69 commits: 48 de Cler Andrade, 19 de Juliano Rodrigo Lamb, 1 de Luis Felipe Machado Dutra e 1 de Luis Dutra. Os commits do professor são o ponto de partida permitido; os do colega permanecem com a autoria original porque são evidência da colaboração. A auditoria detalhada está em `documentos/auditoria-final.md` e `documentos/rastreabilidade.md`. A tag `v1.0.0-entrega` marca a versão final.
 
 ```
 d9f037c docs: adiciona capa UTFPR e reescreve relatorio como diario

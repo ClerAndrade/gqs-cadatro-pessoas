@@ -29,7 +29,7 @@ A correção foi aplicada em 19/11 com `.mailmap` e `git config log.mailmap true
 git --no-pager log --format='%h | %aN <%aE> | %s'
 ```
 
-O histórico mapeado contém 49 commits: 28 de Cler Andrade, 19 de Juliano Rodrigo Lamb, 1 de Luis Felipe Machado Dutra e 1 de Luis Dutra.
+O histórico mapeado contém 69 commits: 48 de Cler Andrade, 19 de Juliano Rodrigo Lamb, 1 de Luis Felipe Machado Dutra e 1 de Luis Dutra.
 
 ## Sobre o requisito de 17 semanas
 

@@ -52,4 +52,4 @@ Não foram executados nesta máquina: a subida dos contêineres com Docker e os 
 
 Neste relatório, A = `ClerAndrade` e B = `So1d`, conforme o slide 57 e o título `(A -> B)` do PR de persistência. O `.mailmap` mapeia `L16-M01 <l16-m01@laboratorio.local>` para `Cler Andrade <115158502+ClerAndrade@users.noreply.github.com>`, sem reescrever os objetos publicados.
 
-O histórico mapeado tem 49 commits: 28 de Cler Andrade, 19 de Juliano Rodrigo Lamb, 1 de Luis Felipe Machado Dutra e 1 de Luis Dutra. Os commits do professor continuam com o nome dele porque são o ponto de partida permitido; os do colega permanecem com a autoria original porque são evidência da colaboração.
+O histórico mapeado tem 69 commits: 48 de Cler Andrade, 19 de Juliano Rodrigo Lamb, 1 de Luis Felipe Machado Dutra e 1 de Luis Dutra. Os commits do professor continuam com o nome dele porque são o ponto de partida permitido; os do colega permanecem com a autoria original porque são evidência da colaboração.
